@@ -759,7 +759,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CellButton
   index: 3
-  game: {fileID: 162105805}
+  game: {fileID: 0}
 --- !u!1 &399502330
 GameObject:
   m_ObjectHideFlags: 0
@@ -895,7 +895,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CellButton
   index: 1
-  game: {fileID: 162105805}
+  game: {fileID: 0}
 --- !u!1 &421965316
 GameObject:
   m_ObjectHideFlags: 0
@@ -3902,7 +3902,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CellButton
   index: 2
-  game: {fileID: 162105805}
+  game: {fileID: 0}
 --- !u!1 &1351777899
 GameObject:
   m_ObjectHideFlags: 0
@@ -6639,7 +6639,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CellButton
   index: 0
-  game: {fileID: 162105805}
+  game: {fileID: 0}
 --- !u!1 &2057534176
 GameObject:
   m_ObjectHideFlags: 0
