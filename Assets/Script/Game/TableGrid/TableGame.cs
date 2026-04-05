@@ -11,18 +11,24 @@ public class TableGame : MonoBehaviour
     private List<int> newNumbers = new List<int>();
     private List<bool> isChanged = new List<bool>();
     private bool[] clicked;
+    private bool canClick = false;
+    public TextMeshProUGUI resultText;
 
     private int correctCount = 0;
     private int selectedCorrect = 0;
 
     void OnEnable()
     {
+        resultText.text = "";
+
         StartCoroutine(GameFlow());
         clicked = new bool[cellTexts.Length];
     }
 
     IEnumerator GameFlow()
     {
+        canClick = false; // ❌ ห้ามกด
+
         GenerateOriginal();
         ShowNumbers(originalNumbers);
 
@@ -30,6 +36,8 @@ public class TableGame : MonoBehaviour
 
         GenerateNew();
         ShowNumbers(newNumbers);
+
+        canClick = true; // ✔ เริ่มกดได้
     }
 
     void GenerateOriginal()
@@ -82,7 +90,8 @@ public class TableGame : MonoBehaviour
 
         public void OnCellClicked(int index)
     {
-        if (clicked[index]) return; // ❌ กดซ้ำไม่ทำงาน
+        if (!canClick) return;
+        //if (clicked[index]) return; // ❌ กดซ้ำไม่ทำงาน
 
         clicked[index] = true;
 
@@ -94,20 +103,26 @@ public class TableGame : MonoBehaviour
             selectedCorrect++;
 
             if (selectedCorrect >= correctCount)
-            {
-                Debug.Log("WIN!");
-                Invoke("GoNext", 1.5f);
-            }
-        }
-        else
-        {
-            cell.SetColor(Color.red);
-            Debug.Log("WRONG!");
+                {
+                    Debug.Log("WIN!");
 
-            // 🔥 แพ้ทันที (ถ้าโบอยากได้)
-            Invoke("LoseGame", 1f);
+                    resultText.text = "CLEAR!";
+                    resultText.color = Color.green;
+
+                    Invoke("GoNext", 1.5f);
+                }
         }
-    }
+            else
+                {
+                    cell.SetColor(Color.red);
+                    Debug.Log("WRONG!");
+
+                    resultText.text = "FAIL!";
+                    resultText.color = Color.red;
+
+                    Invoke("LoseGame", 1.5f);
+                }
+        }
 
     void GoNext()
     {
