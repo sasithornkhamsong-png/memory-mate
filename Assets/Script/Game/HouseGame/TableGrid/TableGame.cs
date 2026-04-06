@@ -27,6 +27,8 @@ public class TableGame : MonoBehaviour
 
     IEnumerator GameFlow()
     {
+        selectedCorrect = 0;
+        correctCount = 0;
         canClick = false; // ❌ ห้ามกด
 
         GenerateOriginal();
@@ -120,7 +122,7 @@ public class TableGame : MonoBehaviour
                     resultText.text = "FAIL!";
                     resultText.color = Color.red;
 
-                    Invoke("LoseGame", 1.5f);
+                    StartCoroutine(LoseAndRestart());
                 }
         }
 
@@ -138,4 +140,29 @@ public class TableGame : MonoBehaviour
         gameObject.SetActive(false);
         gameObject.SetActive(true);
     }
+
+    IEnumerator LoseAndRestart()
+    {
+        canClick = false;
+
+        resultText.text = "FAIL!";
+        resultText.color = Color.red;
+
+        yield return new WaitForSeconds(2f); // ⏳ รอ 2 วิ
+
+        ResetColors();       // 🎨 กลับเป็นสีขาว
+        resultText.text = ""; // ล้างข้อความ
+
+        StartCoroutine(GameFlow()); // 🔄 เริ่มเกมใหม่
+    }
+
+    void ResetColors()
+    {
+        for (int i = 0; i < cellTexts.Length; i++)
+        {
+            CellButton cell = cellTexts[i].transform.parent.GetComponent<CellButton>();
+            cell.SetColor(Color.white);
+        }
+    }
+
 }
