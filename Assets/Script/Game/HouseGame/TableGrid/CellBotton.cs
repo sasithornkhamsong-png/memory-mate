@@ -9,6 +9,8 @@ public class CellButton : MonoBehaviour
 
     private Button btn;
     private Image img;
+    public GameObject checkMark;
+    public GameObject wrongMark;
 
     void Start()
     {
@@ -30,5 +32,17 @@ public class CellButton : MonoBehaviour
     public void SetColor(Color color)
     {
         img.color = color;
+    }
+
+    public void ShowCorrect()
+    {
+        if (checkMark != null)
+            checkMark.SetActive(true);
+    }
+
+    public void ShowWrong()
+    {
+        if (wrongMark != null)
+            wrongMark.SetActive(true);
     }
 }

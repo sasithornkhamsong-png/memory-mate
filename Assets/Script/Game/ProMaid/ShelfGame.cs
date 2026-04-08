@@ -98,7 +98,8 @@ public class ShelfGame : MonoBehaviour
         if (isChanged[index])
         {
             // ✅ กดถูก
-            cell.SetColor(Color.green);
+            //cell.SetColor(Color.green);
+            cell.ShowCorrect(); // 🔥 เพิ่ม
 
             // 🔥 หาย
             itemIcons[index].gameObject.SetActive(false);
@@ -114,7 +115,8 @@ public class ShelfGame : MonoBehaviour
         else
         {
             // ❌ กดผิด
-            cell.SetColor(Color.red);
+            //cell.SetColor(Color.red);
+            cell.ShowWrong();
 
             wrongCount++;
             Debug.Log("WRONG: " + wrongCount);
