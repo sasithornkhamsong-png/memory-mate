@@ -6,6 +6,7 @@ public class CellButton : MonoBehaviour
     public int index;
     public TableGame game;
     public ShelfGame shelfGame;
+    public PartyGame partyGame;
 
     private Button btn;
     private Image img;
@@ -27,6 +28,9 @@ public class CellButton : MonoBehaviour
 
         if (shelfGame != null)
             shelfGame.OnItemClicked(index);
+
+        if (partyGame != null)
+        partyGame.OnGuestSelected(index);
     }
 
     public void SetColor(Color color)
