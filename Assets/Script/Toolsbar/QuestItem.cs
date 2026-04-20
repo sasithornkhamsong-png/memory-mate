@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class QuestItem : MonoBehaviour
 {
@@ -9,10 +10,7 @@ public class QuestItem : MonoBehaviour
 
     public Button button;
     public TMP_Text rewardText;
-    public GameObject gameScreen;
-    public GameObject questScreen;
-    public PageController pageController;
-
+    
     void Start()
     {
         rewardText.text = "+" + reward + " ⭐";
@@ -20,9 +18,8 @@ public class QuestItem : MonoBehaviour
 
     public void StartQuest()
     {
-        GameManager.instance.currentQuest = this;
-
-        pageController.ShowGame();
+       GameManager.instance.currentQuest = this;
+       SceneManager.LoadScene("GameScene"); // ⭐ ใส่ชื่อจริง
     } 
 
     public void CompleteQuest()

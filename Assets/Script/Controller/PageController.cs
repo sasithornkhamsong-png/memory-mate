@@ -1,34 +1,50 @@
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PageController : MonoBehaviour
 {
     public GameObject homeScreen;
+    public GameObject chartScreen;
     public GameObject questScreen;
-    public GameObject gameScreen;
+
+    public Image topBarImage;
+
+    public Color homeColor;
+    public Color normalColor;
 
     void HideAll()
     {
-        homeScreen.SetActive(false);
-        questScreen.SetActive(false);
-        gameScreen.SetActive(false);
+        if (homeScreen != null) homeScreen.SetActive(false);
+        if (questScreen != null) questScreen.SetActive(false);
+        if (chartScreen != null) chartScreen.SetActive(false);
     }
 
     public void ShowHome()
     {
         HideAll();
         homeScreen.SetActive(true);
+
+        topBarImage.color = homeColor; // ⭐ เหลือง
     }
 
     public void ShowQuest()
     {
         HideAll();
         questScreen.SetActive(true);
+
+        topBarImage.color = normalColor; // ⭐ ขาว
+    }
+
+    public void ShowChart()
+    {
+        HideAll();
+        chartScreen.SetActive(true);
     }
 
     public void ShowGame()
     {
-        HideAll();
-        gameScreen.SetActive(true);
+        SceneManager.LoadScene("GameScene");
     }
 }
 
