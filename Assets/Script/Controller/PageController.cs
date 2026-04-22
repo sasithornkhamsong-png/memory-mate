@@ -20,6 +20,11 @@ public class PageController : MonoBehaviour
         if (chartScreen != null) chartScreen.SetActive(false);
     }
 
+    void start()
+    {
+        ShowHome();
+    }
+
     public void ShowHome()
     {
         HideAll();

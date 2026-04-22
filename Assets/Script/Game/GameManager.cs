@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     public int stars = 0;
 
     public TextMeshProUGUI starText;
+    public int lastScore;
+    public int bestScore;
 
     void Awake()
     {
@@ -16,8 +18,13 @@ public class GameManager : MonoBehaviour
     }
 
     void Start()
-    {
-        UpdateUI();
+    {       
+        bestScore = 90;
+        lastScore = 55; // ลองเปลี่ยนค่าเล่น
+
+        FindObjectOfType<CheerUpUI>().UpdateUI();
+        //UpdateUI();
+
     }
 
     public void AddStar(int amount)
@@ -30,4 +37,6 @@ public class GameManager : MonoBehaviour
     {
         starText.text = stars.ToString();
     }
+
+    
 }
