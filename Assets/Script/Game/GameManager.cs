@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,19 +13,53 @@ public class GameManager : MonoBehaviour
     public int lastScore;
     public int bestScore;
 
+    public List<int> recentResults = new List<int>();
+
+    public RecentItemUI[] items;
+
+    // Progress
+    public Sprite greatSprite;
+    public Sprite goodSprite;
+
+    public Color emptyColor = Color.gray;
+
     void Awake()
     {
         instance = this;
     }
 
-    void Start()
+    /*void Start()
     {       
         bestScore = 90;
-        lastScore = 55; // ลองเปลี่ยนค่าเล่น
+        lastScore = 30; // ลองเปลี่ยนค่าเล่น
 
         FindObjectOfType<CheerUpUI>().UpdateUI();
         //UpdateUI();
 
+    }*/
+    void Start()
+    {
+        LoadRealData();
+    }
+
+    void LoadRealData()
+    {
+        var data = GameManager.instance.recentResults;
+
+        for (int i = 0; i < items.Length; i++)
+        {
+            if (i < data.Count)
+            {
+                if (data[i] == 2)
+                    items[i].SetGreat(greatSprite);
+                else
+                    items[i].SetGood(goodSprite);
+            }
+            else
+            {
+                items[i].SetEmpty(emptyColor);
+            }
+        }
     }
 
     public void AddStar(int amount)
@@ -36,6 +71,21 @@ public class GameManager : MonoBehaviour
     void UpdateUI()
     {
         starText.text = stars.ToString();
+    }
+
+    public void FinishGame(int score)
+    {
+        int result;
+
+        if (score >= bestScore)
+            result = 2; // 🎉 ดีมาก
+        else
+            result = 1; // 🙂 ปกติ
+
+        recentResults.Insert(0, result); // ใส่หน้าสุด
+
+        if (recentResults.Count > 5)
+            recentResults.RemoveAt(5);
     }
 
     

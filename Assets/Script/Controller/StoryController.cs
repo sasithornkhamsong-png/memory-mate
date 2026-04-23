@@ -5,6 +5,8 @@ public class StoryController : MonoBehaviour
 {
     public TextMeshProUGUI storyText;
 
+    public BackgroundManager bgManager;
+
     public GameObject panelStory;
     public GameObject panelPasscode;
     public GameObject panelTableGame; // เพิ่ม
@@ -39,7 +41,21 @@ public class StoryController : MonoBehaviour
     void ShowStory()
     {
         storyText.text = allStories[currentStorySet][currentIndex];
+
+        if (currentStorySet == 0)
+        {
+            bgManager.SetBG(bgManager.storyBG);
+        }
+        else if (currentStorySet == 1)
+        {
+            bgManager.SetBG(bgManager.marketBG);
+        }
     }
+        
+    /*void ShowStory()
+    {
+        storyText.text = allStories[currentStorySet][currentIndex];
+    }*/
 
     public void NextStory()
     {
