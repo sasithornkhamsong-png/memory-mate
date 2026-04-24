@@ -11,7 +11,8 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI starText;
     public int lastScore;
-    public int bestScore;
+    public int bestScore = 0;
+    public int score;
 
     public List<int> recentResults = new List<int>();
 
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour
     public Sprite goodSprite;
 
     public Color emptyColor = Color.gray;
+
 
     void Awake()
     {
@@ -75,17 +77,22 @@ public class GameManager : MonoBehaviour
 
     public void FinishGame(int score)
     {
-        int result;
+        bool isNewBest = score > bestScore;
 
-        if (score >= bestScore)
-            result = 2; // 🎉 ดีมาก
-        else
-            result = 1; // 🙂 ปกติ
+        if (isNewBest)
+        {
+            bestScore = score;
+        }
 
-        recentResults.Insert(0, result); // ใส่หน้าสุด
+        int result = isNewBest ? 2 : 1;
+
+        recentResults.Insert(0, result);
 
         if (recentResults.Count > 5)
             recentResults.RemoveAt(5);
+
+        ProgressData.instance.UpdateBestScore(score);
+        //ProgressData.instance.UpdateBestTime(Time);
     }
 
     

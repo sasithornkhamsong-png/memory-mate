@@ -8,6 +8,9 @@ public class CheerUpUI : MonoBehaviour
     public TextMeshProUGUI subText;
     public Image icon;
 
+    public TextMeshProUGUI bestScoreText;
+    public TextMeshProUGUI bestTimeText;
+
     public Sprite bestSprite;   // 🎉
     public Sprite normalSprite; // 🙂
     public Sprite badSprite;    // 😢
@@ -21,6 +24,12 @@ public class CheerUpUI : MonoBehaviour
     {
         int lastScore = GameManager.instance.lastScore;
         int bestScore = GameManager.instance.bestScore;
+
+        bestScoreText.text = ProgressData.instance.bestScore.ToString();
+        if (ProgressData.instance.bestTime > 0)
+            bestTimeText.text = ProgressData.instance.bestTime.ToString("F1") + "s";
+        else
+            bestTimeText.text = "--";
 
         Debug.Log("CheerUpUI RUN"); // ⭐
         Debug.Log("last=" + lastScore + " best=" + bestScore); // ⭐

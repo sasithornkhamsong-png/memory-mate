@@ -7,6 +7,9 @@ public class ProgressData : MonoBehaviour
     public int totalPlay = 0;
     public int totalWin = 0;
 
+    public int bestScore = 0;
+    public float bestTime = 0f;
+
     void Awake()
     {
         if (instance == null)
@@ -23,14 +26,30 @@ public class ProgressData : MonoBehaviour
     {
         Debug.Log("You win!");
 
-        ProgressData.instance.totalPlay++;
-        ProgressData.instance.totalWin++;
+        totalPlay++;
+        totalWin++;
     }
 
     public void LoseGame()
     {
         Debug.Log("You lose!");
 
-        ProgressData.instance.totalPlay++;
+        totalPlay++;
+    }
+
+    public void UpdateBestScore(int score)
+    {
+        if (score > bestScore)
+        {
+            bestScore = score;
+        }
+    }
+
+    public void UpdateBestTime(float time)
+    {
+        if (bestTime == 0 || time < bestTime)
+        {
+            bestTime = time;
+        }
     }
 }
