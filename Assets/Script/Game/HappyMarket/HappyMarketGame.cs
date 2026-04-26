@@ -1,52 +1,65 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class HappyMarketGame : MonoBehaviour
 {
-    [Header("UI")]
-    public GameObject panelMemory;     // หน้าให้จำ
-    public GameObject panelSelect;     // หน้าเลือก
-
-    public TextMeshProUGUI memoryText; // list ตอนจำ
-
-    [Header("Item UI")]
+    [Header("Stage 1 - Memory Game")]
+    public GameObject panelMemory;
+    public GameObject panelSelect;
+    public TextMeshProUGUI memoryText;
     public Transform gridParent;
     public GameObject itemPrefab;
 
-    [Header("Data")]
-    public List<string> allItems = new List<string>();     // item ทั้งหมด
-    public List<string> targetItems = new List<string>();  // item ที่ต้องจำ
+    [Header("Stage 2 - Shopping Game")]
+    public GameObject panelMemorize;
+    public GameObject panelBudget;
+    public GameObject panelShopping;
+    public HappyMarketCardUI currentCard;
+    public Button nextButton;
+    public TextMeshProUGUI cardCounterText;
+    public TextMeshProUGUI budgetText;
 
-    private List<string> selectedItems = new List<string>();
+    [Header("Data")]
+    public List<string> allItems = new();
+    public List<string> targetItems = new();
+    public List<MarketItem> allMarketItems = new();
+
+    private List<string> selectedItems = new();
     private int correctCount = 0;
 
-    void Start()
+    private readonly List<MarketItem> shoppingTargetItems = new();
+    private int currentCardIndex = 0;
+    private int playerBudget = 0;
+
+    private void Start()
     {
         SetupGame();
     }
 
     // =========================
-    // สร้างเกม
+    // STAGE 1: MEMORY GAME
     // =========================
     void SetupGame()
     {
         panelMemory.SetActive(true);
         panelSelect.SetActive(false);
 
-        GenerateTargetItems(3); // เริ่ม 4 อัน
+        if (panelMemorize != null) panelMemorize.SetActive(false);
+        if (panelBudget != null) panelBudget.SetActive(false);
+        if (panelShopping != null) panelShopping.SetActive(false);
 
+        GenerateTargetItems(3);
         ShowMemoryList();
     }
 
-    // =========================
-    // สุ่มของที่ต้องจำ
-    // =========================
     void GenerateTargetItems(int count)
     {
         targetItems.Clear();
 
-        List<string> temp = new List<string>(allItems);
+        List<string> temp = new(allItems);
+        count = Mathf.Min(count, temp.Count);
 
         for (int i = 0; i < count; i++)
         {
@@ -56,9 +69,6 @@ public class HappyMarketGame : MonoBehaviour
         }
     }
 
-    // =========================
-    // แสดงรายการให้จำ
-    // =========================
     void ShowMemoryList()
     {
         memoryText.text = "";
@@ -69,9 +79,6 @@ public class HappyMarketGame : MonoBehaviour
         }
     }
 
-    // =========================
-    // กด "จำเสร็จ"
-    // =========================
     public void OnStartSelect()
     {
         panelMemory.SetActive(false);
@@ -81,18 +88,12 @@ public class HappyMarketGame : MonoBehaviour
         GenerateSelectItems();
     }
 
-    // =========================
-    // รีเซ็ตสถานะ
-    // =========================
     void ResetSelection()
     {
         selectedItems.Clear();
         correctCount = 0;
     }
 
-    // =========================
-    // กด item
-    // =========================
     public void OnItemClicked(string item, TextMeshProUGUI textUI)
     {
         if (selectedItems.Contains(item)) return;
@@ -106,7 +107,7 @@ public class HappyMarketGame : MonoBehaviour
 
             if (correctCount >= targetItems.Count)
             {
-                Invoke("WinGame", 0.5f);
+                Invoke(nameof(StartStage2), 0.5f);
             }
         }
         else
@@ -117,40 +118,33 @@ public class HappyMarketGame : MonoBehaviour
 
     void GenerateSelectItems()
     {
-        List<string> options = new List<string>(targetItems);
-
-        // เอาของที่ไม่ใช่มาเป็นตัวหลอก
-        List<string> temp = new List<string>(allItems);
+        List<string> options = new(targetItems);
+        List<string> temp = new(allItems);
 
         foreach (string item in targetItems)
             temp.Remove(item);
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 3 && temp.Count > 0; i++)
         {
             int rand = Random.Range(0, temp.Count);
             options.Add(temp[rand]);
             temp.RemoveAt(rand);
         }
 
-        // สุ่มตำแหน่ง
         Shuffle(options);
 
-        // ลบของเก่า
         foreach (Transform child in gridParent)
-        {
             Destroy(child.gameObject);
-        }
 
-        // สร้างใหม่
         foreach (string item in options)
         {
             GameObject obj = Instantiate(itemPrefab, gridParent);
 
-            var text = obj.GetComponentInChildren<TMPro.TextMeshProUGUI>();
-            text.color = Color.white; // 🔥 reset สี
+            TextMeshProUGUI text = obj.GetComponentInChildren<TextMeshProUGUI>();
+            text.color = Color.white;
             text.text = item;
 
-            var btn = obj.GetComponent<ItemButton>();
+            ItemButton btn = obj.GetComponent<ItemButton>();
             btn.itemName = item;
             btn.textUI = text;
             btn.game = this;
@@ -162,18 +156,84 @@ public class HappyMarketGame : MonoBehaviour
         for (int i = 0; i < list.Count; i++)
         {
             int rand = Random.Range(i, list.Count);
-            string temp = list[i];
-            list[i] = list[rand];
-            list[rand] = temp;
+            (list[i], list[rand]) = (list[rand], list[i]);
         }
     }
 
     // =========================
-    // ชนะ
+    // STAGE 2: SHOPPING GAME
     // =========================
-    void WinGame()
+    void StartStage2()
     {
-        Debug.Log("WIN!");
-        // TODO: ไปด่านต่อไป
+        panelSelect.SetActive(false);
+        StartMemorizePhase();
+    }
+
+    public void StartMemorizePhase()
+    {
+        panelMemorize.SetActive(true);
+        panelBudget.SetActive(false);
+        panelShopping.SetActive(false);
+
+        GenerateShoppingItems(3);
+        currentCardIndex = 0;
+        DisplayCurrentCard();
+
+        nextButton.onClick.RemoveAllListeners();
+        nextButton.onClick.AddListener(ShowNextCard);
+    }
+
+    void GenerateShoppingItems(int count)
+    {
+        shoppingTargetItems.Clear();
+
+        List<MarketItem> temp = new(allMarketItems);
+        count = Mathf.Min(count, temp.Count);
+
+        for (int i = 0; i < count; i++)
+        {
+            int rand = Random.Range(0, temp.Count);
+            shoppingTargetItems.Add(temp[rand]);
+            temp.RemoveAt(rand);
+        }
+    }
+
+    void DisplayCurrentCard()
+    {
+        if (currentCardIndex >= shoppingTargetItems.Count) return;
+
+        currentCard.Setup(shoppingTargetItems[currentCardIndex]);
+        cardCounterText.text = $"สินค้า {currentCardIndex + 1}/{shoppingTargetItems.Count}";
+    }
+
+    public void ShowNextCard()
+    {
+        currentCardIndex++;
+
+        if (currentCardIndex < shoppingTargetItems.Count)
+        {
+            DisplayCurrentCard();
+        }
+        else
+        {
+            ShowBudgetPhase();
+        }
+    }
+
+    void ShowBudgetPhase()
+    {
+        panelMemorize.SetActive(false);
+        panelBudget.SetActive(true);
+
+        playerBudget = Random.Range(50, 201);
+        budgetText.text = $"งบของคุณวันนี้: {playerBudget} บาท";
+    }
+
+    public void StartShoppingPhase()
+    {
+        panelBudget.SetActive(false);
+        panelShopping.SetActive(true);
     }
 }
+
+
