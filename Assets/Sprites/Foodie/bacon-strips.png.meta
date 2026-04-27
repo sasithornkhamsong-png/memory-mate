@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: 1162427009ca5d74d89af56e989ad82b
+guid: 813b37162d6f9f240bf472824dd6554d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7371089998840287907
-    second: chilli_0
+      213: -6127495502319977449
+    second: bacon-strips_0
+  - first:
+      213: -3896010557705357104
+    second: bacon-strips_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +103,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: chilli_0
+      name: bacon-strips_0
       rect:
         serializedVersion: 2
-        x: 9
-        y: 10
-        width: 494
-        height: 492
+        x: 35
+        y: 3
+        width: 202
+        height: 506
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +118,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d5da0b323b0a4b990800000000000000
-      internalID: -7371089998840287907
+      spriteID: 71cf9653e43c6faa0800000000000000
+      internalID: -6127495502319977449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bacon-strips_1
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 3
+        width: 202
+        height: 506
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d8fcca2a079ee9c0800000000000000
+      internalID: -3896010557705357104
       vertices: []
       indices: 
       edges: []
@@ -135,7 +160,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      chilli_0: -7371089998840287907
+      bacon-strips_0: -6127495502319977449
+      bacon-strips_1: -3896010557705357104
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

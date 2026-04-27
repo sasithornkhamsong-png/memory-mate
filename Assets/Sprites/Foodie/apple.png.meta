@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1162427009ca5d74d89af56e989ad82b
+guid: cce2b2063a9076447bebb06494caa662
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7371089998840287907
-    second: chilli_0
+      213: -7832214784768987486
+    second: apple_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: chilli_0
+      name: apple_0
       rect:
         serializedVersion: 2
-        x: 9
-        y: 10
-        width: 494
-        height: 492
+        x: 24
+        y: 0
+        width: 464
+        height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d5da0b323b0a4b990800000000000000
-      internalID: -7371089998840287907
+      spriteID: 2ae284d66226e4390800000000000000
+      internalID: -7832214784768987486
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      chilli_0: -7371089998840287907
+      apple_0: -7832214784768987486
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
