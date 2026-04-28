@@ -15,6 +15,7 @@ public class ShoppingItemUI : MonoBehaviour
     public Button plusButton;
 
     private MarketItem currentItem;
+    public int Quantity => quantity;
     private int quantity = 0;
     private System.Action onQuantityChanged;
 
