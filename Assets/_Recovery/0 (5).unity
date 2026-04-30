@@ -670,7 +670,6 @@ MonoBehaviour:
     itemSprite: {fileID: 21300000, guid: 4d109c940996da945af49505132ec8ff, type: 3}
     price: 6
     weight: 100
-  memoryCardManager: {fileID: 1305841022}
   orderValidator: {fileID: 2092018843}
   playerBudget: 100
   allItems: []
@@ -2732,95 +2731,6 @@ MonoBehaviour:
   - image: {fileID: 21300000, guid: 1f7855d7f3cb61548b4a57045ade23e4, type: 3}
     itemName: "\u0E44\u0E2A\u0E49\u0E01\u0E23\u0E2D\u0E01"
     price: 30
-  allItems:
-  - itemName: "\u0E1E\u0E23\u0E34\u0E01\u0E2B\u0E27\u0E32\u0E19"
-    itemSprite: {fileID: -1045181238759104467, guid: a4789f405b0bd6647854c61db762f252, type: 3}
-    price: 16
-    weight: 100
-  - itemName: "\u0E41\u0E0B\u0E25\u0E21\u0E2D\u0E19"
-    itemSprite: {fileID: 21300000, guid: bdc8c69d200e13d43aaaebef511735b2, type: 3}
-    price: 59
-    weight: 100
-  - itemName: "\u0E01\u0E38\u0E49\u0E07"
-    itemSprite: {fileID: 21300000, guid: e170b0a80fc339042a120054e1d7d062, type: 3}
-    price: 30
-    weight: 1
-  - itemName: "\u0E40\u0E19\u0E37\u0E49\u0E2D\u0E27\u0E31\u0E27"
-    itemSprite: {fileID: 21300000, guid: 351967034953aa941b7d5b6fd0f9fe60, type: 3}
-    price: 55
-    weight: 100
-  - itemName: "\u0E21\u0E31\u0E19\u0E2B\u0E27\u0E32\u0E19"
-    itemSprite: {fileID: 21300000, guid: e0f7071076dea924d8f116ceb9862bb6, type: 3}
-    price: 30
-    weight: 100
-  - itemName: "\u0E01\u0E23\u0E30\u0E40\u0E17\u0E35\u0E22\u0E21"
-    itemSprite: {fileID: 21300000, guid: 2dc6286ba858cd741894d35b6087f3de, type: 3}
-    price: 15
-    weight: 1
-  - itemName: "\u0E1E\u0E23\u0E34\u0E01\u0E02\u0E35\u0E49\u0E2B\u0E19\u0E39"
-    itemSprite: {fileID: 21300000, guid: 1162427009ca5d74d89af56e989ad82b, type: 3}
-    price: 10
-    weight: 100
-  - itemName: "\u0E40\u0E2B\u0E47\u0E14"
-    itemSprite: {fileID: 21300000, guid: f1d552bc4d7792e4d9bd14aa6a0f54f4, type: 3}
-    price: 22
-    weight: 100
-  - itemName: "\u0E01\u0E30\u0E2B\u0E25\u0E48\u0E33\u0E1B\u0E25\u0E35"
-    itemSprite: {fileID: 21300000, guid: bd8291a02b0003b40937616da9131372, type: 3}
-    price: 17
-    weight: 100
-  - itemName: "\u0E2D\u0E01\u0E44\u0E01\u0E48"
-    itemSprite: {fileID: 21300000, guid: 75b3e0e1c3c417b4aba36c2a4d2f42cf, type: 3}
-    price: 31
-    weight: 100
-  - itemName: "\u0E02\u0E49\u0E32\u0E27\u0E2A\u0E32\u0E23"
-    itemSprite: {fileID: 21300000, guid: bc22922204d9fb14dbf3abef40b72a18, type: 3}
-    price: 45
-    weight: 100
-  - itemName: "\u0E40\u0E1A\u0E04\u0E2D\u0E19"
-    itemSprite: {fileID: 21300000, guid: 813b37162d6f9f240bf472824dd6554d, type: 3}
-    price: 39
-    weight: 100
-  - itemName: "\u0E41\u0E2D\u0E1B\u0E40\u0E1B\u0E34\u0E49\u0E25"
-    itemSprite: {fileID: 21300000, guid: cce2b2063a9076447bebb06494caa662, type: 3}
-    price: 35
-    weight: 100
-  - itemName: "\u0E02\u0E19\u0E21\u0E1B\u0E31\u0E07"
-    itemSprite: {fileID: 21300000, guid: 1c9d91e2bc54c3147af138a84bfc4afe, type: 3}
-    price: 29
-    weight: 250
-  - itemName: "\u0E0A\u0E35\u0E2A\u0E41\u0E02\u0E47\u0E07"
-    itemSprite: {fileID: 21300000, guid: 76e25b717c6ac8241be8ce4665dfd385, type: 3}
-    price: 29
-    weight: 150
-  - itemName: "\u0E40\u0E19\u0E37\u0E49\u0E2D\u0E2B\u0E21\u0E39\u0E39"
-    itemSprite: {fileID: 21300000, guid: f93ebfe156737d943bd9066e657afd6d, type: 3}
-    price: 45
-    weight: 100
-  - itemName: "\u0E02\u0E49\u0E32\u0E27\u0E42\u0E1E\u0E14"
-    itemSprite: {fileID: 21300000, guid: e9aee912f6f0b5e4597a96c9b918eb1f, type: 3}
-    price: 18
-    weight: 100
-  - itemName: "\u0E2B\u0E2D\u0E22\u0E19\u0E32\u0E07\u0E23\u0E21"
-    itemSprite: {fileID: 21300000, guid: 15a217efa679ee34c806a1dd195230fc, type: 3}
-    price: 47
-    weight: 100
-  - itemName: "\u0E44\u0E2A\u0E49\u0E01\u0E23\u0E2D\u0E01"
-    itemSprite: {fileID: 21300000, guid: 1f7855d7f3cb61548b4a57045ade23e4, type: 3}
-    price: 30
-    weight: 100
-  - itemName: "\u0E44\u0E02\u0E48\u0E44\u0E01\u0E48"
-    itemSprite: {fileID: 21300000, guid: 4d109c940996da945af49505132ec8ff, type: 3}
-    price: 6
-    weight: 80
-  - itemName: "\u0E1F\u0E31\u0E01\u0E17\u0E2D\u0E07"
-    itemSprite: {fileID: 21300000, guid: dfa570d45e01dc942a1c976772099720, type: 3}
-    price: 40
-    weight: 500
-  - itemName: "\u0E41\u0E2E\u0E21"
-    itemSprite: {fileID: 21300000, guid: cfc3c0d9eeefdd34bb6a4007745a0a55, type: 3}
-    price: 27
-    weight: 100
   itemImage: {fileID: 4001045267729852236}
   itemNameText: {fileID: 4001045267729852235}
   priceText: {fileID: 4001045267729852234}
@@ -4238,7 +4148,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OrderValidator
   requiredItems: []
-  memoryCardManager: {fileID: 1305841022}
 --- !u!4 &2092018844
 Transform:
   m_ObjectHideFlags: 0

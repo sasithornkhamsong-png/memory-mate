@@ -6,6 +6,7 @@ public class ShopUIManager : MonoBehaviour
 {
     [Header("Data")]
     public MarketItem[] marketItems;
+    public MemoryCardManager memoryCardManager;
     public OrderValidator orderValidator;
     public int playerBudget = 100;
     public MarketItem[] allItems;
@@ -17,47 +18,15 @@ public class ShopUIManager : MonoBehaviour
 
     private void Start()
     {
+        //playerBudget = memoryCardManager.GetCurrentBudget();
         GenerateShopItems();
         UpdateTotalPrice();
     }
 
     void GenerateShopItems()
     {
-        List<MarketItem> shopItems = new List<MarketItem>();
+        List<MarketItem> shopItems = memoryCardManager.GetShoppingItems();
 
-        // เพิ่มสินค้าที่ต้องซื้อ
-        shopItems.AddRange(marketItems);
-
-        // หาสินค้าที่ไม่ได้อยู่ในรายการ
-        List<MarketItem> extraItems = new List<MarketItem>();
-
-        //foreach (MarketItem item in FindObjectsByType<ShopItemDatabase>(FindObjectsSortMode.None)[0].allItems)
-        foreach (MarketItem item in allItems)
-        {
-            if (!shopItems.Contains(item))
-            {
-                extraItems.Add(item);
-            }
-        }
-
-        // เพิ่มสินค้าหลอก 3 ชิ้น
-        for (int i = 0; i < 3 && extraItems.Count > 0; i++)
-        {
-            int randomIndex = Random.Range(0, extraItems.Count);
-            shopItems.Add(extraItems[randomIndex]);
-            extraItems.RemoveAt(randomIndex);
-        }
-
-        // สลับลำดับ
-        for (int i = 0; i < shopItems.Count; i++)
-        {
-            MarketItem temp = shopItems[i];
-            int randomIndex = Random.Range(i, shopItems.Count);
-            shopItems[i] = shopItems[randomIndex];
-            shopItems[randomIndex] = temp;
-        }
-
-        // สร้าง UI
         foreach (MarketItem item in shopItems)
         {
             ShoppingItemUI newItem = Instantiate(shoppingItemPrefab, itemListParent);
@@ -106,7 +75,9 @@ public class ShopUIManager : MonoBehaviour
     {
         List<ShoppingItemUI> selectedItems = new List<ShoppingItemUI>();
 
-        foreach (ShoppingItemUI itemUI in selectedItems) // ใช้ชื่อลิสต์จริงของโบ
+        ShoppingItemUI[] allItemUIs = itemListParent.GetComponentsInChildren<ShoppingItemUI>();
+
+        foreach (ShoppingItemUI itemUI in allItemUIs)
         {
             if (itemUI.GetQuantity() > 0)
             {
@@ -120,7 +91,7 @@ public class ShopUIManager : MonoBehaviour
             totalCost += itemUI.GetTotalPrice();
         }
 
-        if (totalCost > playerBudget)
+        if (totalCost > memoryCardManager.GetCurrentBudget())
         {
             Debug.Log("งบไม่พอ!");
             return;
