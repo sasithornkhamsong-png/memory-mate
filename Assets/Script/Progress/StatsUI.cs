@@ -13,9 +13,9 @@ public class StatsUI : MonoBehaviour
 
     public void UpdateUI()
     {
-        bestScoreText.text = ProgressData.instance.bestScore.ToString();
+        bestScoreText.text = GameManager.instance.bestScore.ToString();
 
-        float time = ProgressData.instance.bestTime;
+        float time = GameManager.instance.bestTime;
         bestTimeText.text = time > 0
             ? time.ToString("F1") + "s"
             : "--";

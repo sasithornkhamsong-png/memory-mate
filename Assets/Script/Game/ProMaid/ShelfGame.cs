@@ -16,7 +16,7 @@ public class ShelfGame : MonoBehaviour
 
     private int correctCount = 0;
     private int selectedCorrect = 0;
-    private int wrongCount = 0; // 🔥 เก็บจำนวนผิด
+    private int wrongCount = 0; // เก็บจำนวนผิด
 
     void OnEnable()
     {
@@ -81,7 +81,7 @@ public class ShelfGame : MonoBehaviour
     {
         for (int i = 0; i < itemIcons.Length; i++)
         {
-            itemIcons[i].gameObject.SetActive(true); // 🔥 รีเซ็ตให้กลับมาแสดง
+            itemIcons[i].gameObject.SetActive(true); // รีเซ็ตให้กลับมาแสดง
             itemIcons[i].sprite = itemSprites[list[i]];
         }
     }
@@ -97,11 +97,11 @@ public class ShelfGame : MonoBehaviour
 
         if (isChanged[index])
         {
-            // ✅ กดถูก
+            // กดถูก
             //cell.SetColor(Color.green);
-            cell.ShowCorrect(); // 🔥 เพิ่ม
+            cell.ShowCorrect(); 
 
-            // 🔥 หาย
+            
             itemIcons[index].gameObject.SetActive(false);
 
             selectedCorrect++;
@@ -114,7 +114,7 @@ public class ShelfGame : MonoBehaviour
         }
         else
         {
-            // ❌ กดผิด
+            // กดผิด
             //cell.SetColor(Color.red);
             cell.ShowWrong();
 
@@ -125,6 +125,9 @@ public class ShelfGame : MonoBehaviour
 
     void GoNext()
     {
+        ProgressData.instance.UpdateBestScore("ProMaid", GameManager.instance.score);
+        ProgressData.instance.CompleteQuest("ProMaid", 1);
+        
         gameObject.SetActive(false);
         FindObjectOfType<ProMaidStoryController>().StartNextStory();
     }

@@ -128,6 +128,9 @@ public class TableGame : MonoBehaviour
 
     void GoNext()
     {
+        ProgressData.instance.UpdateBestScore("HouseGame", GameManager.instance.score);
+        ProgressData.instance.CompleteQuest("HouseGame", 1);
+        
         gameObject.SetActive(false);
         FindObjectOfType<StoryController>().StartNextStory();
     }

@@ -4,11 +4,8 @@ public class ProgressData : MonoBehaviour
 {
     public static ProgressData instance;
 
-    public int totalPlay = 0;
-    public int totalWin = 0;
-
-    public int bestScore = 0;
-    public float bestTime = 0f;
+    // ชื่อเกมทั้ง 3
+    public static readonly string[] GameNames = { "HappyMarket", "HouseGame", "ProMaid" };
 
     void Awake()
     {
@@ -16,40 +13,54 @@ public class ProgressData : MonoBehaviour
             instance = this;
     }
 
-    public float GetProgress()
+    // ======= บันทึกคะแนนสูงสุด =======
+    public void UpdateBestScore(string gameName, int score)
     {
-        if (totalPlay == 0) return 0;
-        return (float)totalWin / totalPlay;
-    }
-
-    public void WinGame()
-    {
-        Debug.Log("You win!");
-
-        totalPlay++;
-        totalWin++;
-    }
-
-    public void LoseGame()
-    {
-        Debug.Log("You lose!");
-
-        totalPlay++;
-    }
-
-    public void UpdateBestScore(int score)
-    {
-        if (score > bestScore)
+        string key = gameName + "_BestScore";
+        if (score > PlayerPrefs.GetInt(key, 0))
         {
-            bestScore = score;
+            PlayerPrefs.SetInt(key, score);
+            PlayerPrefs.Save();
         }
     }
 
-    public void UpdateBestTime(float time)
+    public int GetBestScore(string gameName)
     {
-        if (bestTime == 0 || time < bestTime)
+        return PlayerPrefs.GetInt(gameName + "_BestScore", 0);
+    }
+
+    // ======= บันทึกภารกิจ =======
+    public void CompleteQuest(string gameName, int questIndex)
+    {
+        string key = gameName + "_Quest_" + questIndex;
+        PlayerPrefs.SetInt(key, 1);
+        PlayerPrefs.Save();
+    }
+
+    public bool IsQuestComplete(string gameName, int questIndex)
+    {
+        return PlayerPrefs.GetInt(gameName + "_Quest_" + questIndex, 0) == 1;
+    }
+
+    // ======= คำนวณ % ของแต่ละเกม =======
+    // maxScore และ totalQuests ต้องกำหนดตามแต่ละเกม
+    public float GetProgress(string gameName, int maxScore, int totalQuests)
+    {
+        // 70% มาจาก high score
+        float scorePercent = 0f;
+        if (maxScore > 0)
+            scorePercent = Mathf.Clamp01((float)GetBestScore(gameName) / maxScore) * 0.7f;
+
+        // 30% มาจากภารกิจ
+        float questPercent = 0f;
+        if (totalQuests > 0)
         {
-            bestTime = time;
+            int completed = 0;
+            for (int i = 0; i < totalQuests; i++)
+                if (IsQuestComplete(gameName, i)) completed++;
+            questPercent = Mathf.Clamp01((float)completed / totalQuests) * 0.3f;
         }
+
+        return scorePercent + questPercent; // 0.0 - 1.0
     }
 }

@@ -134,6 +134,9 @@ public class PartyGame : MonoBehaviour
     void WinGame()
     {
         Debug.Log("WIN!");
+
+        ProgressData.instance.UpdateBestScore("ProMaid", GameManager.instance.score);
+        ProgressData.instance.CompleteQuest("ProMaid", 0);
         
         gameObject.SetActive(false);
         FindObjectOfType<ProMaidStoryController>().StartNextStory();

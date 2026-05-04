@@ -96,6 +96,10 @@ public class PasscodeGame : MonoBehaviour
     void GoNext()
         {
             Debug.Log("GoNext ทำงานแล้ว!");
+
+            ProgressData.instance.UpdateBestScore("HouseGame", GameManager.instance.score);
+            ProgressData.instance.CompleteQuest("HouseGame", 0);
+
             gameObject.SetActive(false);
             FindObjectOfType<StoryController>().StartNextStory();
         }

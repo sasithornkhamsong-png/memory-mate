@@ -107,6 +107,7 @@ public class HappyMarketGame : MonoBehaviour
 
             if (correctCount >= targetItems.Count)
             {
+                ProgressData.instance.CompleteQuest("HappyMarket", 0);
                 Invoke(nameof(StartStage2), 0.5f);
             }
         }

@@ -30,6 +30,14 @@ public class GameManager : MonoBehaviour
         instance = this;
     }
 
+    public float bestTime = 0f;
+
+    public void UpdateBestTime(float time)
+    {
+        if (bestTime == 0 || time < bestTime)
+            bestTime = time;
+    }
+
     /*void Start()
     {       
         bestScore = 90;
@@ -41,6 +49,9 @@ public class GameManager : MonoBehaviour
     }*/
     void Start()
     {
+        bestScore = PlayerPrefs.GetInt("BestScore_HouseGame", 0);
+        bestTime = PlayerPrefs.GetFloat("BestTime_HouseGame", 0f);
+
         LoadRealData();
     }
 
@@ -82,17 +93,17 @@ public class GameManager : MonoBehaviour
         if (isNewBest)
         {
             bestScore = score;
+            PlayerPrefs.SetInt("BestScore_HouseGame", bestScore);
+            PlayerPrefs.Save();
         }
 
         int result = isNewBest ? 2 : 1;
-
         recentResults.Insert(0, result);
 
         if (recentResults.Count > 5)
             recentResults.RemoveAt(5);
 
-        ProgressData.instance.UpdateBestScore(score);
-        //ProgressData.instance.UpdateBestTime(Time);
+        ProgressData.instance.UpdateBestScore("HouseGame", score);
     }
 
     

@@ -13,13 +13,13 @@ public class QuestItem : MonoBehaviour
     
     void Start()
     {
-        rewardText.text = "+" + reward + " ⭐";
+        rewardText.text = "+" + reward;
     }
 
     public void StartQuest()
     {
        GameManager.instance.currentQuest = this;
-       SceneManager.LoadScene("GameScene"); // ⭐ ใส่ชื่อจริง
+       SceneManager.LoadScene("GameScene"); 
     } 
 
     public void CompleteQuest()

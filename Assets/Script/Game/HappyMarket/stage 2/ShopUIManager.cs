@@ -100,8 +100,14 @@ public class ShopUIManager : MonoBehaviour
         bool isCorrect = orderValidator.ValidateOrder(selectedItems);
 
         if (isCorrect)
-            Debug.Log("สั่งซื้อถูกต้อง!");
+        {   Debug.Log("สั่งซื้อถูกต้อง!");
+
+            ProgressData.instance.CompleteQuest("HappyMarket", 1);
+            ProgressData.instance.UpdateBestScore("HappyMarket", totalCost);
+        }
         else
+        {
             Debug.Log("สั่งซื้อไม่ถูกต้อง");
+        }
     }
 }

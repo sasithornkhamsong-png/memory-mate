@@ -11,16 +11,16 @@ public class RecentUI : MonoBehaviour
 
     void Start()
     {
-        LoadTestData();
+        LoadRealData();
     }
 
-    void LoadTestData()
+    void LoadRealData()
     {
-        int[] data = { 2, 1, 1, 2 }; // ⭐ ลองก่อน
+        var data = GameManager.instance.recentResults;
 
         for (int i = 0; i < items.Length; i++)
         {
-            if (i < data.Length)
+            if (i < data.Count)
             {
                 if (data[i] == 2)
                     items[i].SetGreat(greatSprite);

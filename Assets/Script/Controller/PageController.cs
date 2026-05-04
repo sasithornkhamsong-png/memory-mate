@@ -9,6 +9,7 @@ public class PageController : MonoBehaviour
     public GameObject questScreen;
 
     public Image topBarImage;
+    public BottomBarController bottomBar;
 
     public Color homeColor;
     public Color normalColor;
@@ -20,7 +21,7 @@ public class PageController : MonoBehaviour
         if (chartScreen != null) chartScreen.SetActive(false);
     }
 
-    void start()
+    void Start()
     {
         ShowHome();
     }
@@ -30,7 +31,8 @@ public class PageController : MonoBehaviour
         HideAll();
         homeScreen.SetActive(true);
 
-        topBarImage.color = homeColor; // ⭐ เหลือง
+        topBarImage.color = homeColor; //  เหลือง
+         bottomBar.SetActive("Home");
     }
 
     public void ShowQuest()
@@ -38,13 +40,17 @@ public class PageController : MonoBehaviour
         HideAll();
         questScreen.SetActive(true);
 
-        topBarImage.color = normalColor; // ⭐ ขาว
+        topBarImage.color = normalColor; //  ขาว
+        bottomBar.SetActive("Quest");
     }
 
     public void ShowChart()
     {
         HideAll();
         chartScreen.SetActive(true);
+
+        topBarImage.color = normalColor;
+        bottomBar.SetActive("Chart");
     }
 
     public void ShowGame()
