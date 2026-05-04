@@ -126,6 +126,6 @@ public class ShelfGame : MonoBehaviour
     void GoNext()
     {
         gameObject.SetActive(false);
-        FindObjectOfType<StoryController>().StartNextStory();
+        FindObjectOfType<ProMaidStoryController>().StartNextStory();
     }
 }

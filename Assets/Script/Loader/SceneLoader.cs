@@ -7,4 +7,14 @@ public class SceneLoader : MonoBehaviour
     {
         SceneManager.LoadScene("HouseGame");
     }
+
+    public void LoadProMaid()
+    {
+        SceneManager.LoadScene("ProMaid");
+    } 
+
+    public void LoadHappyMarket()
+    {
+        SceneManager.LoadScene("HappyMarket");
+    }
 }

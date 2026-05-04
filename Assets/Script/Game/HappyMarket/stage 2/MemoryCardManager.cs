@@ -63,7 +63,7 @@ public class MemoryCardManager : MonoBehaviour
         List<MarketItem> tempList = new List<MarketItem>(allItems);
         items.Clear();
 
-        int itemCount = Random.Range(3, 5); // 3–4 ชิ้น
+        int itemCount = Random.Range(3, 6); // 3–4 ชิ้น
 
         for (int i = 0; i < itemCount && tempList.Count > 0; i++)
         {
@@ -92,7 +92,7 @@ public class MemoryCardManager : MonoBehaviour
 
     private void GenerateBudget()
     {
-        currentBudget = Random.Range(80, 301);
+        currentBudget = Random.Range(120, 251);
 
         budgetText.text = currentBudget + " บาท";
         budgetRemainText.text = "เงินในกระเป๋า: " + currentBudget + " บาท";

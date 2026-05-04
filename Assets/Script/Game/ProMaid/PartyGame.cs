@@ -134,9 +134,9 @@ public class PartyGame : MonoBehaviour
     void WinGame()
     {
         Debug.Log("WIN!");
-
-        // ไปด่านต่อไป
-        // หรือเรียก StoryController
+        
+        gameObject.SetActive(false);
+        FindObjectOfType<ProMaidStoryController>().StartNextStory();
     }
 
     public Image[] guestSlots;
