@@ -13528,8 +13528,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1171735300}
-  - component: {fileID: 1171735299}
   - component: {fileID: 1171735301}
+  - component: {fileID: 1171735302}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -13537,30 +13537,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1171735299
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1171735298}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2eca031eea2b624daaef675e66acf24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  currentQuest: {fileID: 0}
-  stars: 0
-  starText: {fileID: 276455978}
-  lastScore: 0
-  bestScore: 0
-  score: 0
-  bestTime: 0
-  recentResults: 
-  items: []
-  greatSprite: {fileID: 0}
-  goodSprite: {fileID: 0}
-  emptyColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!4 &1171735300
 Transform:
   m_ObjectHideFlags: 0
@@ -13588,6 +13564,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5983ebaae80ac844bef36f88c60b74e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProgressData
+--- !u!114 &1171735302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1171735298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2eca031eea2b624daaef675e66acf24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  currentQuest: {fileID: 0}
+  stars: 0
+  starText: {fileID: 0}
+  lastScore: 0
+  bestScore: 0
+  score: 0
+  bestTime: 0
+  recentResults: 0000000000000000000000000000000000000000
+  items:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  greatSprite: {fileID: 0}
+  goodSprite: {fileID: 0}
+  emptyColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  myItem_time: 0
+  myItem_score: 100
+  card_time: 0
+  card_score: 100
+  game1_score: 0
+  game1_time: 0
 --- !u!1 &1175130342
 GameObject:
   m_ObjectHideFlags: 0

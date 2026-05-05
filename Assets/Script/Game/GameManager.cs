@@ -5,6 +5,8 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+
+    // ========== ของโบ ==========
     public QuestItem currentQuest;
 
     public int stars = 0;
@@ -22,17 +24,36 @@ public class GameManager : MonoBehaviour
     public Sprite goodSprite;
     public Color emptyColor = Color.gray;
 
+    // ========== ของเพื่อน ==========
+    public float myItem_time = 0f;
+    public int myItem_score = 100;
+
+    public float card_time = 0f;
+    public int card_score = 100;
+
+    public int game1_score = 0;
+    public float game1_time = 0f;
+
+    // ========== Awake ==========
     void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
+    // ========== Start ==========
     void Start()
     {
         bestScore = PlayerPrefs.GetInt("BestScore_HouseGame", 0);
         bestTime = PlayerPrefs.GetFloat("BestTime_HouseGame", 0f);
 
-        // โหลด recentResults
         recentResults.Clear();
         for (int i = 0; i < 5; i++)
         {
@@ -44,8 +65,11 @@ public class GameManager : MonoBehaviour
         LoadRealData();
     }
 
+    // ========== ฟังก์ชันของโบ ==========
     void LoadRealData()
     {
+        if (items == null || items.Length == 0) return;
+
         for (int i = 0; i < items.Length; i++)
         {
             if (i < recentResults.Count)
@@ -81,7 +105,6 @@ public class GameManager : MonoBehaviour
 
     public void FinishGame(int score)
     {
-        // save lastScore
         lastScore = score;
         PlayerPrefs.SetInt("HouseGame_LastScore", score);
 
@@ -98,7 +121,6 @@ public class GameManager : MonoBehaviour
         if (recentResults.Count > 5)
             recentResults.RemoveAt(5);
 
-        // save recentResults
         for (int i = 0; i < recentResults.Count; i++)
             PlayerPrefs.SetInt("HouseGame_Recent_" + i, recentResults[i]);
 
@@ -106,5 +128,22 @@ public class GameManager : MonoBehaviour
 
         ProgressData.instance.UpdateBestScore("HouseGame", score);
         StreakController.instance.AddStreak();
+    }
+
+    // ========== ฟังก์ชันของเพื่อน ==========
+    public void CalculateFinalResults()
+    {
+        game1_score = myItem_score + card_score;
+        game1_time = myItem_time + card_time;
+    }
+
+    public void ResetGameData()
+    {
+        myItem_time = 0f;
+        myItem_score = 100;
+        card_time = 0f;
+        card_score = 100;
+        game1_score = 0;
+        game1_time = 0f;
     }
 }
