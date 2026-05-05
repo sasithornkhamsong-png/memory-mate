@@ -104,6 +104,7 @@ public class ShopUIManager : MonoBehaviour
 
             ProgressData.instance.CompleteQuest("HappyMarket", 1);
             ProgressData.instance.UpdateBestScore("HappyMarket", totalCost);
+            StreakController.instance.AddStreak();
         }
         else
         {

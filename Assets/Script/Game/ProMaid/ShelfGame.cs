@@ -127,6 +127,7 @@ public class ShelfGame : MonoBehaviour
     {
         ProgressData.instance.UpdateBestScore("ProMaid", GameManager.instance.score);
         ProgressData.instance.CompleteQuest("ProMaid", 1);
+        StreakController.instance.AddStreak();
         
         gameObject.SetActive(false);
         FindObjectOfType<ProMaidStoryController>().StartNextStory();

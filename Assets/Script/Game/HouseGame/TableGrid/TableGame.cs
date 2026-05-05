@@ -130,6 +130,7 @@ public class TableGame : MonoBehaviour
     {
         ProgressData.instance.UpdateBestScore("HouseGame", GameManager.instance.score);
         ProgressData.instance.CompleteQuest("HouseGame", 1);
+        StreakController.instance.AddStreak();
         
         gameObject.SetActive(false);
         FindObjectOfType<StoryController>().StartNextStory();

@@ -99,6 +99,7 @@ public class PasscodeGame : MonoBehaviour
 
             ProgressData.instance.UpdateBestScore("HouseGame", GameManager.instance.score);
             ProgressData.instance.CompleteQuest("HouseGame", 0);
+            StreakController.instance.AddStreak();
 
             gameObject.SetActive(false);
             FindObjectOfType<StoryController>().StartNextStory();

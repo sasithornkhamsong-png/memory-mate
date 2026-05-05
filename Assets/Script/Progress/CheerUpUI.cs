@@ -2,42 +2,27 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class CheerUpUI : MonoBehaviour 
+public class CheerUpUI : MonoBehaviour
 {
     public TextMeshProUGUI titleText;
     public TextMeshProUGUI subText;
     public Image icon;
 
-    public TextMeshProUGUI bestScoreText;
-    public TextMeshProUGUI bestTimeText;
+    public Sprite bestSprite;
+    public Sprite normalSprite;
+    public Sprite badSprite;
 
-    public Sprite bestSprite;  
-    public Sprite normalSprite; 
-    public Sprite badSprite;    
+    public string gameName; // ใส่ใน Inspector
 
     void OnEnable()
     {
         UpdateUI();
     }
 
-    public void UpdateUI() 
+    public void UpdateUI()
     {
-        if (GameManager.instance == null)
-        {
-            Debug.LogError("GameManager is null!");
-            return;
-        }
-
-        int lastScore = GameManager.instance.lastScore;
-        int bestScore = GameManager.instance.bestScore;
-
-        bestScoreText.text = bestScore.ToString();
-        
-        float time = GameManager.instance.bestTime;
-        if (time > 0)
-            bestTimeText.text = time.ToString("F1") + "s";
-        else
-            bestTimeText.text = "--";
+        int bestScore = PlayerPrefs.GetInt(gameName + "_BestScore", 0);
+        int lastScore = PlayerPrefs.GetInt(gameName + "_LastScore", 0);
 
         if (lastScore >= bestScore && bestScore != 0)
         {

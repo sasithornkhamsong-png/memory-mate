@@ -1,64 +1,71 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 using System;
 
 public class StreakController : MonoBehaviour
 {
-    [Header("UI")]
-    public TextMeshProUGUI streakText; // ตัวเลขใน badge
+    public static StreakController instance;
+
+    public TextMeshProUGUI streakText;
+
+    void Awake()
+    {
+        if (instance == null)
+            instance = this;
+    }
 
     void Start()
     {
-        CheckStreak();
+        UpdateUI();
     }
 
-    void CheckStreak()
+    // เรียกตอนจบเกม ได้คะแนนอะไรก็ได้
+    public void AddStreak()
     {
-        string lastLoginStr = PlayerPrefs.GetString("LastLoginDate", "");
+        string lastLoginStr = PlayerPrefs.GetString("LastStreakDate", "");
         int currentStreak = PlayerPrefs.GetInt("StreakCount", 0);
 
         DateTime today = DateTime.Now.Date;
 
         if (lastLoginStr == "")
         {
-            // เข้าครั้งแรกเลย
             currentStreak = 1;
         }
         else
         {
-            DateTime lastLogin = DateTime.Parse(lastLoginStr);
-            int dayDiff = (today - lastLogin).Days;
+            DateTime lastDate = DateTime.Parse(lastLoginStr);
+            int dayDiff = (today - lastDate).Days;
 
             if (dayDiff == 0)
             {
-                // เข้ามาแล้ววันนี้ ไม่ต้องทำอะไร
+                // เล่นแล้ววันนี้ ไม่เพิ่ม
+                UpdateUI();
+                return;
             }
             else if (dayDiff == 1)
             {
-                // เข้ามาวันถัดไป เพิ่ม streak
                 currentStreak++;
             }
             else
             {
-                // หายไปมากกว่า 1 วัน reset
                 currentStreak = 1;
             }
         }
 
-        // บันทึกค่า
         PlayerPrefs.SetInt("StreakCount", currentStreak);
-        PlayerPrefs.SetString("LastLoginDate", today.ToString("yyyy-MM-dd"));
+        PlayerPrefs.SetString("LastStreakDate", today.ToString("yyyy-MM-dd"));
         PlayerPrefs.Save();
 
-        // อัปเดต UI
-        if (streakText != null)
-            streakText.text = currentStreak.ToString();
-
-        Debug.Log("Streak วันนี้: " + currentStreak);
+        UpdateUI();
     }
 
-    // เรียกใช้ตรงนี้ถ้าอยากรู้ streak ปัจจุบัน
+    void UpdateUI()
+    {
+        int streak = PlayerPrefs.GetInt("StreakCount", 0);
+        if (streakText != null)
+            streakText.text = streak.ToString();
+    }
+
     public int GetStreak()
     {
         return PlayerPrefs.GetInt("StreakCount", 0);

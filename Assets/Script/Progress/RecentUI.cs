@@ -9,6 +9,8 @@ public class RecentUI : MonoBehaviour
 
     public Color emptyColor = Color.gray;
 
+    public string gameName; // ใส่ใน Inspector
+
     void Start()
     {
         LoadRealData();
@@ -16,21 +18,16 @@ public class RecentUI : MonoBehaviour
 
     void LoadRealData()
     {
-        var data = GameManager.instance.recentResults;
-
         for (int i = 0; i < items.Length; i++)
         {
-            if (i < data.Count)
-            {
-                if (data[i] == 2)
-                    items[i].SetGreat(greatSprite);
-                else
-                    items[i].SetGood(goodSprite);
-            }
+            int result = PlayerPrefs.GetInt(gameName + "_Recent_" + i, 0);
+
+            if (result == 2)
+                items[i].SetGreat(greatSprite);
+            else if (result == 1)
+                items[i].SetGood(goodSprite);
             else
-            {
                 items[i].SetEmpty(emptyColor);
-            }
         }
     }
 }
