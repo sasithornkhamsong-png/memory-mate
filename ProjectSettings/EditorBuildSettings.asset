@@ -23,6 +23,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game/HappyMarket.unity
     guid: 904aa78b5b2632040b5f01da541f324c
+  - enabled: 1
+    path: Assets/Scenes/Scene_Level1.unity
+    guid: a083e93213004474ab22466a1b1ac455
+  - enabled: 1
+    path: Assets/Scenes/Scene_Level2.unity
+    guid: 1df855b545ddf504783551c8f895141a
+  - enabled: 1
+    path: Assets/Scenes/Scene_Mission.unity
+    guid: fd87fe282726c514eba1e1d219424406
+  - enabled: 1
+    path: Assets/Scenes/statistic_game2.unity
+    guid: 8093cfe72f4f1074f8d07911683e36fb
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
   m_UseUCBPForAssetBundles: 0

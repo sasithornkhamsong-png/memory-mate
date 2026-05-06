@@ -19,7 +19,7 @@ public class MemoryCard : MonoBehaviour
         GetComponent<Button>().onClick.AddListener(OnCardClicked);
     }
 
-    // ผู้จัดการ (CardManager) จะส่งรูปหน้าการ์ดมาให้ตอนเริ่มเกม
+    // CardManager จะส่งรูปหน้าการ์ดมาให้ตอนเริ่มเกม
     public void SetupCard(Sprite faceSprite)
     {
         cardFaceSprite = faceSprite;
@@ -36,7 +36,7 @@ public class MemoryCard : MonoBehaviour
 
     void OnCardClicked()
     {
-        // เมื่อถูกคลิก ให้สะกิดบอก CardManager ว่า "ฉันถูกคลิกแล้วนะ!"
+        // เมื่อถูกคลิก ให้สะกิดบอก CardManager ว่า "ถูกคลิกแล้ว!"
         CardManager.instance.CardClicked(this);
     }
 }

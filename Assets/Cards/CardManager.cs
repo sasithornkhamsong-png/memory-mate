@@ -47,8 +47,8 @@ public class CardManager : MonoBehaviour
     void Start()
     {
         panelTutorial.SetActive(true);
-        panelWin.SetActive(false); // ซ่อนหน้าสรุปผลไว้ก่อนตอนเริ่มเกม
-        isTimerRunning = false; 
+        panelWin.SetActive(false); 
+        isTimerRunning = false; //ตอนเริ่มเกมยังไม่จับเวลา
     }
 
     public void StartPlay()
@@ -56,7 +56,7 @@ public class CardManager : MonoBehaviour
         panelTutorial.SetActive(false); 
         UpdateScoreText(); 
         SetupGame(); 
-        isTimerRunning = true; 
+        isTimerRunning = true; //ตอนเล่นเกมตัวจับเวลาทำงาน
     }
 
     void Update()
@@ -75,16 +75,32 @@ public class CardManager : MonoBehaviour
         }
     }
 
-    void SetupGame()
+void SetupGame()
     {
         if (allCardFaces.Count < 8) return;
 
-        for (int i = 0; i < 8; i++)
+        playCards.Clear();
+
+        // 1. มีรูปทุกรูปที่ใส่
+        List<Sprite> shuffledFaces = new List<Sprite>(allCardFaces);
+
+        // 2. สุ่มเรียงลำดับการ์ดทั้งหมดที่มี
+        for (int i = 0; i < shuffledFaces.Count; i++)
         {
-            playCards.Add(allCardFaces[i]);
-            playCards.Add(allCardFaces[i]); 
+            Sprite temp = shuffledFaces[i];
+            int randomIndex = Random.Range(i, shuffledFaces.Count);
+            shuffledFaces[i] = shuffledFaces[randomIndex];
+            shuffledFaces[randomIndex] = temp;
         }
 
+        // 3. เลือก 8 รูปแรกที่เรียงใหม่ มาทำเป็นการ์ด2ใบลงใน playCards
+        for (int i = 0; i < 8; i++)
+        {
+            playCards.Add(shuffledFaces[i]); // ใบที่ 1
+            playCards.Add(shuffledFaces[i]); // ใบที่ 2 (คู่ของมัน)
+        }
+
+        // 4. สับไพ่ 16 ใบใน playCards เพื่อวางในตาราง
         for (int i = 0; i < playCards.Count; i++)
         {
             Sprite temp = playCards[i];
@@ -93,11 +109,13 @@ public class CardManager : MonoBehaviour
             playCards[randomIndex] = temp;
         }
 
+        // 5. วางการ์ด 16 ใบลงตาราง
         for (int i = 0; i < 16; i++)
         {
             GameObject newCardObj = Instantiate(cardPrefab, cardGrid);
+            newCardObj.transform.localScale = Vector3.one; 
             MemoryCard cardScript = newCardObj.GetComponent<MemoryCard>();
-            cardScript.SetupCard(playCards[i]); 
+            cardScript.SetupCard(playCards[i]);
         }
     }
 
@@ -132,7 +150,7 @@ public class CardManager : MonoBehaviour
             if (matchedPairs >= 8)
             {
                 isTimerRunning = false; 
-                ShowWinScreen(); // เรียกใช้ฟังก์ชันโชว์หน้าต่างตอนชนะ
+                ShowWinScreen(); // เรียกใช้ฟังก์ชันโชว์หน้าสรุปผลตอนชนะ
             }
         }
         else
@@ -157,7 +175,7 @@ public class CardManager : MonoBehaviour
 // --- หน้าสรุปผล ---
     void ShowWinScreen()
     {
-        panelWin.SetActive(true); // เปิดหน้าต่าง
+        panelWin.SetActive(true); // เปิดหน้าต่างหน้าสรุปผล
 
         // --- บันทึกว่าเล่นจบไปอีก 1 รอบ ---
         int currentPlayCount = PlayerPrefs.GetInt("Mission_PlayCount", 0);
@@ -176,14 +194,14 @@ public class CardManager : MonoBehaviour
         // *** เรียกใช้ฟังก์ชันบันทึกและจัดอันดับ ***
         SaveAndSortHighScore(combinedScore, combinedTime);
         
-        // *** 3. แสดงผลคะแนน "รวม" ***
+        // *** 3. แสดงผล"คะแนนรวม2ด่าน" ***
         if (finalScoreText != null) 
             finalScoreText.text = combinedScore.ToString(); 
             
-        // *** 4. แสดงผลเวลา "รวม" ***
+        // *** 4. แสดงผล"เวลารวม2ด่าน" ***
         if (finalTimeText != null) 
         {
-            // ใช้เวลาที่บวกรวมกันแล้ว (combinedTime) มาคำนวณแทน timeElapsed
+            // ใช้เวลาที่บวกรวมกันแล้ว (combinedTime) มาคำนวณ
             int totalSeconds = Mathf.FloorToInt(combinedTime); 
             
             int minutes = totalSeconds / 60; 
@@ -234,7 +252,7 @@ public void SaveAndSortHighScore(int currentScore, float currentTime)
             }
         });
 
-        // 4. เช็คว่าทำลายสถิติไหม
+        // 4. เช็คว่าทำลายสถิติไหม --- ส่วนของ mission ----
         // ต้องมีสถิติเดิมอยู่ก่อน (hasPreviousRecord) และ สถิติใหม่ต้องขึ้นอันดับ 1 ***
         if (hasPreviousRecord && data.records[0] == newRecord)
         {
@@ -278,7 +296,7 @@ public void SaveAndSortHighScore(int currentScore, float currentTime)
         public void GoToStatistic()
     {
         // ไปหน้าสถิติ
-        SceneManager.LoadScene("Scene_Statistic"); 
+        SceneManager.LoadScene("statistic_game2"); 
     }
 }
 

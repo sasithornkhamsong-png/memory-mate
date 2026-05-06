@@ -1,3 +1,4 @@
+//Level1Manager ในโปรเจครวม 
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections; // เพิ่มการใช้งาน Coroutine
@@ -32,6 +33,7 @@ public class Level1Manager : MonoBehaviour
     public List<Sprite> playItems = new List<Sprite>(); 
 
     private bool isTimerRunning = false;
+    private float timeElapsed = 0f; 
     
     public int totalScore = 0;  
     private int foundCount = 0; 
@@ -51,7 +53,8 @@ public class Level1Manager : MonoBehaviour
         if (isTimerRunning == true)
         {
             // *** ช่วงที่มีการจับเวลาอยู่จะมีการบันทึกเวลาไปเก็บไว้ที่ตัวแปร myItem_time ที่ประกาศไว้ในไฟล์ GameManager ***
-            GameManager.instance.myItem_time += Time.deltaTime;
+            //GameManager.instance.myItem_time += Time.deltaTime;
+            timeElapsed += Time.deltaTime;
         }
     }
 
@@ -163,9 +166,19 @@ public class Level1Manager : MonoBehaviour
 
         for (int i = 0; i < 12; i++)
         {
+ 
             GameObject newCard = Instantiate(itemPrefab, gridParentPlay);
             newCard.GetComponent<Image>().sprite = playItems[i];
-            newCard.GetComponent<Button>().interactable = true; 
+            
+            Button cardButton = newCard.GetComponent<Button>();
+            cardButton.interactable = true; 
+
+            // --- สั่งให้ปุ่มรู้จักฟังก์ชัน CheckClickedItem อัตโนมัติ ---
+            Sprite currentSprite = playItems[i];
+            GameObject currentCard = newCard;
+            
+            cardButton.onClick.RemoveAllListeners();
+            cardButton.onClick.AddListener(() => CheckClickedItem(currentSprite, currentCard));
         }
     }
 
@@ -194,8 +207,11 @@ public class Level1Manager : MonoBehaviour
 
                 // *** บันทึกคะแนนและเวลาของด่าน 1 เก็บไว้ ***
                 PlayerPrefs.SetInt("Level1Score", totalScore);
-                PlayerPrefs.SetFloat("Level1Time", GameManager.instance.myItem_time); 
+                PlayerPrefs.SetFloat("Level1Time", timeElapsed); 
                 PlayerPrefs.Save();
+                
+                //PlayerPrefs.SetFloat("Level1Time", GameManager.instance.myItem_time); 
+
                 
                 // *** เรียกใช้งาน Coroutine แทนการเปิด panelNextGame ทันที ***
                 StartCoroutine(ShowComplimentAndNextPanel());
