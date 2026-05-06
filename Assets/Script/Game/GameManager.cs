@@ -72,6 +72,8 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < items.Length; i++)
         {
+            if (items[i] == null) continue;
+            
             if (i < recentResults.Count)
             {
                 if (recentResults[i] == 2)
