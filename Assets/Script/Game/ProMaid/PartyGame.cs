@@ -40,6 +40,7 @@ public class PartyGame : MonoBehaviour
     public List<Menu> menus = new List<Menu>();
 
     private int currentIndex = 0;
+    private List<Guest> selectedGuests = new List<Guest>();
     private Menu currentMenu;
 
     void Start()
@@ -48,20 +49,35 @@ public class PartyGame : MonoBehaviour
         panelMenu.SetActive(false);
         panelSelect.SetActive(false);
 
+        GenerateGuests();
         ShowGuest();
     }
 
     // =========================
     // แสดงแขก
     // =========================
+    void GenerateGuests()
+    {
+        selectedGuests.Clear();
+
+        List<Guest> temp = new List<Guest>(guests);
+
+        for (int i = 0; i < 4; i++)
+        {
+            int rand = Random.Range(0, temp.Count);
+            selectedGuests.Add(temp[rand]);
+            temp.RemoveAt(rand);
+        }
+    }
+
     void ShowGuest()
     {
-        Guest g = guests[currentIndex];
+        Guest g = selectedGuests[currentIndex];
 
         infoText.text =
             "คุณ " + g.name +
             "\n\nชอบ: " + g.like +
-            "\nแพ้: " + g.allergy;
+            "\nแพ้/ไม่ชอบ : " + g.allergy;
 
         guestImage.sprite = g.image;
     }
@@ -73,7 +89,7 @@ public class PartyGame : MonoBehaviour
     {
         currentIndex++;
 
-        if (currentIndex >= guests.Count)
+        if (currentIndex >= selectedGuests.Count)
         {
             GoToMenu();
             return;
@@ -99,8 +115,6 @@ public class PartyGame : MonoBehaviour
             "\nมีส่วนผสม: " + currentMenu.ingredient;
 
         foodImage.sprite = currentMenu.image;
-
-         SetupSelectionUI();
     }
 
     // =========================
@@ -117,7 +131,7 @@ public class PartyGame : MonoBehaviour
     // =========================
     public void OnGuestSelected(int index)
     {
-        Guest g = guests[index];
+        Guest g = selectedGuests[index];
 
         if (CanServe(g))
         {
@@ -144,12 +158,14 @@ public class PartyGame : MonoBehaviour
     }
 
     public Image[] guestSlots;
+    public TextMeshProUGUI[] guestNames;
 
     void SetupSelectionUI()
     {
         for (int i = 0; i < guestSlots.Length; i++)
         {
-            guestSlots[i].sprite = guests[i].image;
+            guestSlots[i].sprite = selectedGuests[i].image;
+            guestNames[i].text = selectedGuests[i].name;
         }
     }
 
@@ -158,6 +174,8 @@ public class PartyGame : MonoBehaviour
         panelInfo.SetActive(false);
         panelMenu.SetActive(false);
         panelSelect.SetActive(true);
+
+        SetupSelectionUI();
     }
 
    

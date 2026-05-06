@@ -150,7 +150,7 @@ void SetupGame()
             if (matchedPairs >= 8)
             {
                 isTimerRunning = false; 
-                ShowWinScreen(); // เรียกใช้ฟังก์ชันโชว์หน้าสรุปผลตอนชนะ
+                StartCoroutine(GoToProMaid()); // เรียกเกมของโบ Party Game
             }
         }
         else
@@ -170,6 +170,12 @@ void SetupGame()
         firstCard = null;
         secondCard = null;
         isChecking = false; 
+    }
+
+    IEnumerator GoToProMaid()
+    {
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene("ProMaid");
     }
 
 // --- หน้าสรุปผล ---

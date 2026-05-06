@@ -89,11 +89,13 @@ public class ShelfGame : MonoBehaviour
     public void OnItemClicked(int index)
     {
         if (index >= itemIcons.Length) return;
+        if (index >= isChanged.Count) return;
         if (clicked[index]) return;
 
         clicked[index] = true;
 
         CellButton cell = itemIcons[index].GetComponentInParent<CellButton>();
+        if (cell == null) return;
 
         if (isChanged[index])
         {

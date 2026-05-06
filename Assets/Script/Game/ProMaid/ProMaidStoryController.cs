@@ -8,9 +8,9 @@ public class ProMaidStoryController : MonoBehaviour
     public GameObject panelStory;
 
     [Header("Panels")]
-    public GameObject panelShelfGame;
+    //public GameObject panelShelfGame;
     public GameObject panelPartyGame;
-    public GameObject panelMatchingGame;
+   //public GameObject panelMatchingGame;
     public GameObject panelScore; // สร้างทีหลังได้ ใส่ null ไปก่อน
 
     private string[][] allStories;
@@ -66,22 +66,7 @@ public class ProMaidStoryController : MonoBehaviour
     {
         panelStory.SetActive(false);
 
-        if (currentStorySet == 0)
-        {
-            panelShelfGame.SetActive(true);
-        }
-        else if (currentStorySet == 1)
-        {
-            panelPartyGame.SetActive(true);
-        }
-        else if (currentStorySet == 2)
-        {
-            // จบเกมทั้งหมด → แสดงคะแนน
-            if (panelScore != null)
-                panelScore.SetActive(true);
-            else
-                Debug.Log("TODO: แสดงหน้าคะแนน");
-        }
+        panelPartyGame.SetActive(true);
     }
 
     public void StartNextStory()

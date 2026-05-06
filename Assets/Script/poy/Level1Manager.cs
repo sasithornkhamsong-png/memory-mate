@@ -189,13 +189,25 @@ public class Level1Manager : MonoBehaviour
             // เลือกผิด! 
             totalScore--; 
             if(scoreText != null) scoreText.text = "Score: " + totalScore;
+
+            /*CardFeedback feedback = cardObject.GetComponent<CardFeedback>();
+            if (feedback != null)
+            {
+                feedback.ShowWrong();
+            }*/
         }
         else
         {
             // เลือกถูก! 
             cardObject.GetComponent<Button>().interactable = false; 
-            cardObject.GetComponent<Image>().color = Color.green; 
-            
+            //cardObject.GetComponent<Image>().color = Color.green; 
+            CardFeedback feedback = cardObject.GetComponent<CardFeedback>();
+
+            if (feedback != null)
+            {
+                feedback.ShowCorrect();
+            }
+                        
             //totalScore++; 
             foundCount++; 
             
