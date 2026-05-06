@@ -7,6 +7,8 @@ public class PasscodeGame : MonoBehaviour
     public TextMeshProUGUI codeText;
     public TextMeshProUGUI timerText;
 
+    public StoryController storyController;
+
     //public TMP_InputField inputField;
     public TextMeshProUGUI resultText;
     private string playerInput = "";
@@ -84,7 +86,7 @@ public class PasscodeGame : MonoBehaviour
             resultText.text = "CORRECT!";
             resultText.color = Color.green;
 
-            Invoke("GoNext", 1.5f);
+            StartCoroutine(WaitAndGoNext()); // เปลี่ยนตรงนี้
         }
         else
         {
@@ -93,15 +95,38 @@ public class PasscodeGame : MonoBehaviour
         }
     }
 
-    void GoNext()
-        {
-            Debug.Log("GoNext ทำงานแล้ว!");
+    IEnumerator WaitAndGoNext()
+    {
+        yield return new WaitForSeconds(1.5f);
 
-            ProgressData.instance.UpdateBestScore("HouseGame", GameManager.instance.score);
+        if (ProgressData.instance != null)
+        {
+            ProgressData.instance.UpdateBestScore("HouseGame", 0);
             ProgressData.instance.CompleteQuest("HouseGame", 0);
+        }
+
+        if (StreakController.instance != null)
             StreakController.instance.AddStreak();
 
-            gameObject.SetActive(false);
-            FindObjectOfType<StoryController>().StartNextStory();
+        storyController.StartNextStory();
+        gameObject.SetActive(false);
+    }
+
+    /*void GoNext()
+    {
+        Debug.Log("GoNext ทำงานแล้ว!");
+
+        if (ProgressData.instance != null)
+        {
+            ProgressData.instance.UpdateBestScore("HouseGame", GameManager.instance.score);
+            ProgressData.instance.CompleteQuest("HouseGame", 0);
         }
+
+        if (StreakController.instance != null)
+            StreakController.instance.AddStreak();
+
+        // เรียก StoryController ก่อน แล้วค่อยปิด panel
+        storyController.StartNextStory();
+        gameObject.SetActive(false);
+    }*/
 }
