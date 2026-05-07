@@ -20,6 +20,8 @@ public class Level1Manager : MonoBehaviour
 
     [Header("UI แสดงผล")]
     public TextMeshProUGUI scoreText; 
+    public TextMeshProUGUI tutorialText;
+    public TextMeshProUGUI tutorialText2;
 
     [Header("ระบบสร้างสิ่งของ")]
     public GameObject itemPrefab;
@@ -45,6 +47,7 @@ public class Level1Manager : MonoBehaviour
 
     void Start()
     {
+        tutorialText.text = "จำสิ่งของให้ดี ก่อนเริ่มเกม!";
         ShowTutorial1();
     }
 
@@ -105,6 +108,8 @@ public class Level1Manager : MonoBehaviour
 
     public void GoToTutorial2()
     {
+        tutorialText2.text = "เลือกสิ่งของที่ไม่มีในรายการ!";
+
         panelRemember.SetActive(false);
         panelTutorial2.SetActive(true);
         isTimerRunning = false; 
@@ -164,7 +169,7 @@ public class Level1Manager : MonoBehaviour
             playItems[randomIndex] = temp;
         }
 
-        for (int i = 0; i < 12; i++)
+        for (int i = 0; i < playItems.Count; i++)
         {
  
             GameObject newCard = Instantiate(itemPrefab, gridParentPlay);

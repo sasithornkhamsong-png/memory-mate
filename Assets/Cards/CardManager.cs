@@ -18,6 +18,7 @@ public class CardManager : MonoBehaviour
     public Transform cardGrid;
 
     [Header("UI แสดงผล")]
+    public TextMeshProUGUI tutorialText;
     public TextMeshProUGUI scoreText; 
     public TextMeshProUGUI finalScoreText; // ข้อความคะแนนตอนจบ
     public TextMeshProUGUI finalTimeText;  // ข้อความเวลาตอนจบ
@@ -48,6 +49,8 @@ public class CardManager : MonoBehaviour
     {
         panelTutorial.SetActive(true);
         panelWin.SetActive(false); 
+
+        tutorialText.text = "จับคู่ภาพที่เหมือนกันให้ครบทั้งหมด!";
         isTimerRunning = false; //ตอนเริ่มเกมยังไม่จับเวลา
     }
 
