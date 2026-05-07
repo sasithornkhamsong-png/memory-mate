@@ -57,6 +57,11 @@ public class PageController : MonoBehaviour
     {
         SceneManager.LoadScene("GameScene");
     }
+
+    void Start()
+    {
+        ShowHome();
+    }
 }
 
 /*using UnityEngine;
