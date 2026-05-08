@@ -50,7 +50,7 @@ public class CardManager : MonoBehaviour
         panelTutorial.SetActive(true);
         panelWin.SetActive(false); 
 
-        tutorialText.text = "จับคู่ภาพที่เหมือนกันให้ครบทั้งหมด!";
+        tutorialText.text = "คุณเดินทางมาถึงภารกิจต่อไป ง่ายมาก ! จับคู่ภาพให้เข้ากันทั้งหมดหน่อยสิ";
         isTimerRunning = false; //ตอนเริ่มเกมยังไม่จับเวลา
     }
 
@@ -151,10 +151,17 @@ void SetupGame()
             secondCard.GetComponent<Button>().interactable = false;
 
             if (matchedPairs >= 8)
-            {
-                isTimerRunning = false; 
-                StartCoroutine(GoToProMaid()); // เรียกเกมของโบ Party Game
-            }
+                {
+                    isTimerRunning = false;
+
+                    // Save คะแนนด่าน 2 ไว้รอรวมที่ด่าน 3
+                    PlayerPrefs.SetInt("Level2Score", totalScore);
+                    PlayerPrefs.SetFloat("Level2Time", timeElapsed);
+                    PlayerPrefs.Save();
+
+                    StartCoroutine(GoToProMaid()); // ไปด่าน 3 ต่อเลย
+                    // ลบ ShowWinScreen() ออก ไม่ต้องเรียกที่นี่
+                }
         }
         else
         {
