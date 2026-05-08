@@ -74,6 +74,11 @@ public class HappyMarketStoryController : MonoBehaviour
         if (currentStorySet == 0)
         {
             panelCheckListGame.SetActive(true);
+
+            HappyMarketGame game =
+            panelCheckListGame.GetComponent<HappyMarketGame>();
+
+        game.StartChecklistGame();
         }
         else if (currentStorySet == 1)
         {
@@ -92,6 +97,8 @@ public class HappyMarketStoryController : MonoBehaviour
             else
                 Debug.Log("TODO: แสดงหน้าคะแนน");
         }
+
+         currentStorySet++;
     }
 
     public void StartNextStory()

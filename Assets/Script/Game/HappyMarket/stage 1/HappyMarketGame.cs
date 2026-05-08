@@ -35,6 +35,11 @@ public class HappyMarketGame : MonoBehaviour
 
     private void Start()
     {
+        
+    }
+
+    public void StartChecklistGame()
+    {
         SetupGame();
     }
 
@@ -109,13 +114,21 @@ public class HappyMarketGame : MonoBehaviour
             {
                 ProgressData.instance.CompleteQuest("HappyMarket", 0);
                 StreakController.instance.AddStreak();
-                Invoke(nameof(StartStage2), 0.5f);
+                Invoke(nameof(GoToStory2), 0.5f);
             }
         }
         else
         {
             textUI.color = Color.red;
         }
+    }
+
+    public HappyMarketStoryController storyController;
+
+    void GoToStory2()
+    {
+        panelSelect.SetActive(false);
+        storyController.StartNextStory();
     }
 
     void GenerateSelectItems()
@@ -143,7 +156,7 @@ public class HappyMarketGame : MonoBehaviour
             GameObject obj = Instantiate(itemPrefab, gridParent);
 
             TextMeshProUGUI text = obj.GetComponentInChildren<TextMeshProUGUI>();
-            text.color = Color.white;
+            text.color = Color.black;
             text.text = item;
 
             ItemButton btn = obj.GetComponent<ItemButton>();
