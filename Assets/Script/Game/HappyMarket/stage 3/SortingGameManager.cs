@@ -35,13 +35,39 @@ public class SortingGameManager : MonoBehaviour
 
     public GameObject summaryPanel;
 
+    [Header("Score")]
+    public TMP_Text scoreText;
+
+    private int totalScore = 100;
+    private int penaltyScore = 0;
+
+    [Header("Timer")]
+    private float timeElapsed = 0f;
+    private bool isTimerRunning = true;
+
+    [Header("Final Score")]
+    public TMP_Text finalScoreText;
+    public GameObject panelScore;
+    public TMP_Text finalTimeText;
+
     private int currentSlot = 0;
 
     void Start()
     {
+        totalScore = 100;
+        scoreText.text = "Score : " + totalScore;
+        
         memorizePanel.SetActive(true);
         arrangePanel.SetActive(false);
         LoadRandomRecipe();
+    }
+
+    void Update()
+    {
+        if (isTimerRunning)
+        {
+            timeElapsed += Time.deltaTime;
+        }
     }
 
     void LoadRandomRecipe()
@@ -121,12 +147,23 @@ public class SortingGameManager : MonoBehaviour
         {
             resultImage.sprite = correctSprite;
             resultText.text = "มื้อนี้สมบูรณ์แบบมาก !";
+            PlayerPrefs.SetInt("SortingGameScore", totalScore);
+            PlayerPrefs.Save();
 
             retryButton.SetActive(false);
             scoreButton.SetActive(true);
+            //Invoke(nameof(ShowFinalScore), 3f);
         }
         else
         {
+            penaltyScore++;
+
+            totalScore = 100 - penaltyScore;
+
+            if (totalScore < 0)
+                totalScore = 0;
+
+            scoreText.text = "Score : " + totalScore;
             resultImage.sprite = wrongSprite;
             resultText.text = "มื้อนี้ยังมีบางอย่างไม่ถูกต้อง\nลองใหม่อีกครั้งนะ";
 
@@ -157,5 +194,48 @@ public class SortingGameManager : MonoBehaviour
         //resultPanel.SetActive(false);
         arrangePanel.SetActive(false);
         //summaryPanel.SetActive(true);
+    }
+
+    public void ShowFinalScore()
+    {
+        isTimerRunning = false;
+        PlayerPrefs.SetFloat("SortingGameTime", timeElapsed);
+        PlayerPrefs.Save();
+        resultPanel.SetActive(false);
+        arrangePanel.SetActive(false);
+
+        int happyMarketScore =
+            PlayerPrefs.GetInt("HappyMarketScore", 0);
+
+        int shoppingGameScore =
+            PlayerPrefs.GetInt("ShoppingGameScore", 0);
+
+        int sortingGameScore =
+            PlayerPrefs.GetInt("SortingGameScore", 0);
+
+        int finalScore =
+            happyMarketScore +
+            shoppingGameScore +
+            sortingGameScore;
+
+        float happyMarketTime =
+            PlayerPrefs.GetFloat("HappyMarketTime", 0f);
+
+        float shoppingGameTime =
+            PlayerPrefs.GetFloat("ShoppingGameTime", 0f);
+
+        float finalTime =
+            happyMarketTime +
+            shoppingGameTime +
+            timeElapsed;
+
+        finalScoreText.text = "" + finalScore;
+        panelScore.SetActive(true);
+
+        int minutes = Mathf.FloorToInt(finalTime / 60);
+        int seconds = Mathf.FloorToInt(finalTime % 60);
+
+        finalTimeText.text =
+        minutes + " m " + seconds + " s";
     }
 }

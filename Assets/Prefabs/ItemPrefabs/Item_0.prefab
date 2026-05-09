@@ -261,7 +261,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1012903272282492458}
         m_TargetAssemblyTypeName: ItemButton, Assembly-CSharp
-        m_MethodName: OnClick
+        m_MethodName: ClickItem
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
