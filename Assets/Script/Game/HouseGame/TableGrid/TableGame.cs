@@ -2,34 +2,38 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class TableGame : MonoBehaviour
 {
     public TextMeshProUGUI[] cellTexts;
+    public TextMeshProUGUI resultText;
 
     private List<int> originalNumbers = new List<int>();
     private List<int> newNumbers = new List<int>();
     private List<bool> isChanged = new List<bool>();
     private bool[] clicked;
     private bool canClick = false;
-    public TextMeshProUGUI resultText;
-
     private int correctCount = 0;
     private int selectedCorrect = 0;
+    private float startTime;
+    private bool isTiming = false;
+    private int playerScore = 100;
 
     void OnEnable()
     {
+        playerScore = 100;
         resultText.text = "";
-
         StartCoroutine(GameFlow());
-        clicked = new bool[cellTexts.Length];
     }
 
     IEnumerator GameFlow()
     {
         selectedCorrect = 0;
         correctCount = 0;
-        canClick = false; // ❌ ห้ามกด
+        canClick = false; 
+
+        clicked = new bool[cellTexts.Length];
 
         GenerateOriginal();
         ShowNumbers(originalNumbers);
@@ -39,13 +43,14 @@ public class TableGame : MonoBehaviour
         GenerateNew();
         ShowNumbers(newNumbers);
 
-        canClick = true; // ✔ เริ่มกดได้
+        canClick = true; 
+        startTime = Time.time;
+        isTiming = true;
     }
 
     void GenerateOriginal()
     {
         originalNumbers.Clear();
-
         for (int i = 0; i < cellTexts.Length; i++)
         {
             originalNumbers.Add(Random.Range(1, 100));
@@ -64,7 +69,6 @@ public class TableGame : MonoBehaviour
             if (Random.value < 0.5f)
             {
                 int newNum;
-
                 do
                 {
                     newNum = Random.Range(1, 100);
@@ -90,10 +94,10 @@ public class TableGame : MonoBehaviour
         }
     }
 
-        public void OnCellClicked(int index)
+    public void OnCellClicked(int index)
     {
         if (!canClick) return;
-        //if (clicked[index]) return; // ❌ กดซ้ำไม่ทำงาน
+        if (clicked[index]) return; // ✔️ เปิดใช้งาน: ป้องกันการกดช่องเดิมซ้ำ
 
         clicked[index] = true;
 
@@ -105,59 +109,56 @@ public class TableGame : MonoBehaviour
             selectedCorrect++;
 
             if (selectedCorrect >= correctCount)
+            {
+                if(isTiming)
                 {
-                    Debug.Log("WIN!");
-
-                    resultText.text = "CLEAR!";
-                    resultText.color = Color.green;
-
-                    Invoke("GoNext", 1.5f);
+                    isTiming = false;
+                    float timeUsed = Time.time - startTime;
+                    PlayerPrefs.SetFloat("time_Game1Level2", timeUsed);
                 }
-        }
-            else
-                {
-                    cell.SetColor(Color.red);
-                    Debug.Log("WRONG!");
+                
+                PlayerPrefs.SetInt("score_Game1Level2", playerScore);
+                PlayerPrefs.Save();
 
-                    resultText.text = "FAIL!";
-                    resultText.color = Color.red;
+                Debug.Log("WIN!");
+                resultText.text = "CLEAR!";
+                resultText.color = Color.green;
+                canClick = false; // หยุดการกดหลังจากชนะ
 
-                    StartCoroutine(LoseAndRestart());
-                }
+                Invoke("GoNext", 1.5f);
+            }
         }
+        else
+        {
+            playerScore--;
+            if (playerScore < 0) playerScore = 0;
+            
+            cell.SetColor(Color.red);
+            Debug.Log("WRONG!");
+            resultText.text = "FAIL!";
+            resultText.color = Color.red;
+
+            StartCoroutine(LoseAndRestart());
+        }
+    }
 
     void GoNext()
     {
-        ProgressData.instance.UpdateBestScore("HouseGame", GameManager.instance.score);
-        ProgressData.instance.CompleteQuest("HouseGame", 1);
-        StreakController.instance.AddStreak();
-        
-        gameObject.SetActive(false);
-        FindObjectOfType<StoryController>().StartNextStory();
-    }
-
-        void LoseGame()
-    {
-        Debug.Log("LOSE!");
-
-        // รีสตาร์ทง่าย ๆ
-        gameObject.SetActive(false);
-        gameObject.SetActive(true);
+        if (StreakController.instance != null)
+        {
+            StreakController.instance.AddStreak();
+        }
+        SceneManager.LoadScene("FortuneSticks");
     }
 
     IEnumerator LoseAndRestart()
     {
         canClick = false;
+        yield return new WaitForSeconds(2f); 
 
-        resultText.text = "FAIL!";
-        resultText.color = Color.red;
-
-        yield return new WaitForSeconds(2f); // ⏳ รอ 2 วิ
-
-        ResetColors();       // 🎨 กลับเป็นสีขาว
-        resultText.text = ""; // ล้างข้อความ
-
-        StartCoroutine(GameFlow()); // 🔄 เริ่มเกมใหม่
+        ResetColors();       
+        resultText.text = ""; 
+        StartCoroutine(GameFlow()); 
     }
 
     void ResetColors()
@@ -168,5 +169,4 @@ public class TableGame : MonoBehaviour
             cell.SetColor(Color.white);
         }
     }
-
 }
