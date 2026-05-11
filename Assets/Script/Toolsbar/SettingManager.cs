@@ -63,7 +63,7 @@ public class SettingManager : MonoBehaviour
     // =========================
     public void ToggleBGM(bool isOn)
     {
-        bgmSource.mute = !isOn;
+        AudioManager.instance.SetBGM(isOn);
 
         ApplyToggleVisual(
             bgmBackground,
@@ -71,11 +71,7 @@ public class SettingManager : MonoBehaviour
             isOn
         );
 
-        PlayerPrefs.SetInt(
-            "BGMOn",
-            isOn ? 1 : 0
-        );
-
+        PlayerPrefs.SetInt("BGMOn", isOn ? 1 : 0);
         PlayerPrefs.Save();
     }
 

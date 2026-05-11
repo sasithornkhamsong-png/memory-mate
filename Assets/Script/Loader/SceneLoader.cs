@@ -17,4 +17,9 @@ public class SceneLoader : MonoBehaviour
     {
         SceneManager.LoadScene("HappyMarket");
     }
+
+    public void LoadSceneLevel1()
+    {
+        SceneManager.LoadScene("Scene_Level1");
+    }
 }

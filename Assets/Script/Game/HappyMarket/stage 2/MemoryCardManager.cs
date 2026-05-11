@@ -99,7 +99,7 @@ public class MemoryCardManager : MonoBehaviour
 
     private void GenerateBudget()
     {
-        currentBudget = Random.Range(120, 251);
+        currentBudget = Random.Range(180, 251);
 
         budgetText.text = currentBudget + " บาท";
         budgetRemainText.text = "เงินในกระเป๋า: " + currentBudget + " บาท";
