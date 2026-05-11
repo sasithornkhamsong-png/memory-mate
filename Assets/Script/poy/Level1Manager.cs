@@ -47,7 +47,7 @@ public class Level1Manager : MonoBehaviour
 
     void Start()
     {
-        tutorialText.text = "จำสิ่งของให้ดี ก่อนเริ่มเกม!";
+        tutorialText.text = "เข้าบ้านมาใหม่ คุณจะต้องจัดการสัมภาระให้เรียบร้อย";
         ShowTutorial1();
     }
 
@@ -108,7 +108,7 @@ public class Level1Manager : MonoBehaviour
 
     public void GoToTutorial2()
     {
-        tutorialText2.text = "เลือกสิ่งของที่ไม่มีในรายการ!";
+        tutorialText2.text = "น่าแปลก ที่มีของบางชิ้นที่ไม่ได้มาจากกระเป๋าของคุณ เลือกมันออกไปซะ";
 
         panelRemember.SetActive(false);
         panelTutorial2.SetActive(true);

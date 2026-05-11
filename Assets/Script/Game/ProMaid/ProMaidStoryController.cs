@@ -24,8 +24,9 @@ public class ProMaidStoryController : MonoBehaviour
             // ก่อน ShelfGame
             new string[]
             {
-                "ยินดีต้อนรับสู่บ้าน ProMaid...",
-                "คุณมีภารกิจต้องจัดของบนชั้น..."
+                "วันนี้ตอนเย็นที่บ้านจะมีปาร์ตี้วันเกิด",
+                "คุณมีภารกิจจะต้องจัดการเรื่องอาหารของแขก",
+                "ระวังอย่าทำพลาดเด็ดขาด.."
             },
             // ก่อน PartyGame
             new string[]

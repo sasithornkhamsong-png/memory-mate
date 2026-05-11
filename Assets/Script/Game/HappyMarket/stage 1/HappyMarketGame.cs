@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Collections;
 
 public class HappyMarketGame : MonoBehaviour
 {
@@ -9,8 +10,11 @@ public class HappyMarketGame : MonoBehaviour
     public GameObject panelMemory;
     public GameObject panelSelect;
     public TextMeshProUGUI memoryText;
+    public TextMeshProUGUI resultText;
     public Transform gridParent;
     public GameObject itemPrefab;
+    private float timeElapsed = 0f;
+    private bool isTimerRunning = true;
 
     [Header("Stage 2 - Shopping Game")]
     public GameObject panelMemorize;
@@ -29,11 +33,32 @@ public class HappyMarketGame : MonoBehaviour
     private List<string> selectedItems = new();
     private int correctCount = 0;
 
+    [Header("Score")]
+    public TextMeshProUGUI scoreText;
+    private int totalScore = 100;
+    private int penaltyScore = 0;
+
     private readonly List<MarketItem> shoppingTargetItems = new();
     private int currentCardIndex = 0;
     private int playerBudget = 0;
 
     private void Start()
+    {
+        StartChecklistGame();
+
+        totalScore = 100;
+        scoreText.text = "Score : " + totalScore;
+    }
+
+    void Update()
+    {
+        if (isTimerRunning)
+        {
+            timeElapsed += Time.deltaTime;
+        }
+    }
+
+    public void StartChecklistGame()
     {
         SetupGame();
     }
@@ -81,6 +106,11 @@ public class HappyMarketGame : MonoBehaviour
 
     public void OnStartSelect()
     {
+        if (targetItems.Count == 0)
+        {
+            GenerateTargetItems(3);
+        }
+
         panelMemory.SetActive(false);
         panelSelect.SetActive(true);
 
@@ -92,6 +122,8 @@ public class HappyMarketGame : MonoBehaviour
     {
         selectedItems.Clear();
         correctCount = 0;
+
+        resultText.text = "";
     }
 
     public void OnItemClicked(string item, TextMeshProUGUI textUI)
@@ -100,54 +132,126 @@ public class HappyMarketGame : MonoBehaviour
 
         selectedItems.Add(item);
 
-        if (targetItems.Contains(item))
+        // เพิ่ม .Trim().ToLower() กันพลาด
+        bool isCorrect = targetItems.Exists(t => t.Trim().ToLower() == item.Trim().ToLower());
+
+        if (isCorrect)
         {
             textUI.color = Color.green;
             correctCount++;
 
             if (correctCount >= targetItems.Count)
             {
-                ProgressData.instance.CompleteQuest("HappyMarket", 0);
-                StreakController.instance.AddStreak();
-                Invoke(nameof(StartStage2), 0.5f);
+                isTimerRunning = false;
+
+                PlayerPrefs.SetInt("HappyMarketScore", totalScore);
+                PlayerPrefs.Save();
+                
+                PlayerPrefs.SetFloat("HappyMarketTime", timeElapsed);
+                PlayerPrefs.Save();
+
+                resultText.text = "เยี่ยมเลย จำได้หมดแล้ว";
+                
+                if (ProgressData.instance != null)
+                    ProgressData.instance.CompleteQuest("HappyMarket", 0);
+                
+                if (StreakController.instance != null)
+                    StreakController.instance.AddStreak();
+                
+                Invoke(nameof(GoToStory2), 3f);
             }
         }
         else
         {
             textUI.color = Color.red;
+            StartCoroutine(ResetTextColor(textUI));
+
+            penaltyScore++;
+            totalScore = 100 - penaltyScore;
+
+            if (totalScore < 0)
+                totalScore = 0;
+            scoreText.text = "Score : " + totalScore;
+        }
+    }
+
+    public HappyMarketStoryController storyController;
+
+    void GoToStory2()
+    {
+        Debug.Log("GoToStory2 called!");
+        
+        panelSelect.SetActive(false);
+        panelMemory.SetActive(false); // เพิ่ม
+        
+        // ปิด Panel_CheckListGame ทั้งหมดก่อน
+        gameObject.SetActive(false); // เพิ่ม
+        
+        if (storyController != null)
+        {
+            storyController.StartNextStory();
         }
     }
 
     void GenerateSelectItems()
     {
-        List<string> options = new(targetItems);
-        List<string> temp = new(allItems);
+        List<string> options = new();
 
+        // ใส่ targetItems ก่อน
         foreach (string item in targetItems)
-            temp.Remove(item);
+        {
+            string cleanItem = item.Trim();
 
+            if (!options.Contains(cleanItem))
+            {
+                options.Add(cleanItem);
+            }
+        }
+
+        // สุ่มตัวหลอก
+        List<string> temp = new();
+
+        foreach (string item in allItems)
+        {
+            string cleanItem = item.Trim();
+
+            if (!options.Contains(cleanItem))
+            {
+                temp.Add(cleanItem);
+            }
+        }
+
+        // เพิ่มตัวหลอกดิ้ ไม่เพิ่มกุจะหลอกผีมึง
         for (int i = 0; i < 3 && temp.Count > 0; i++)
         {
             int rand = Random.Range(0, temp.Count);
+
             options.Add(temp[rand]);
             temp.RemoveAt(rand);
         }
 
         Shuffle(options);
 
-        foreach (Transform child in gridParent)
-            Destroy(child.gameObject);
+        // ลบของเก่า
+        foreach (string item in options)
+        Debug.Log("option: " + item);
 
+        foreach (Transform child in gridParent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // สร้างปุ่มใหม่
         foreach (string item in options)
         {
             GameObject obj = Instantiate(itemPrefab, gridParent);
 
             TextMeshProUGUI text = obj.GetComponentInChildren<TextMeshProUGUI>();
-            text.color = Color.white;
             text.text = item;
+            text.color = Color.black;
 
             ItemButton btn = obj.GetComponent<ItemButton>();
-            btn.itemName = item;
+            btn.itemName = item.Trim();
             btn.textUI = text;
             btn.game = this;
         }
@@ -160,6 +264,14 @@ public class HappyMarketGame : MonoBehaviour
             int rand = Random.Range(i, list.Count);
             (list[i], list[rand]) = (list[rand], list[i]);
         }
+        
+    }
+
+    IEnumerator ResetTextColor(TextMeshProUGUI textUI)
+    {
+        yield return new WaitForSeconds(1f);
+
+        textUI.color = Color.black;
     }
 
     // =========================

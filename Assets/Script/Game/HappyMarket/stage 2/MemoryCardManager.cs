@@ -33,12 +33,19 @@ public class MemoryCardManager : MonoBehaviour
     private int currentBudget;
     private int currentIndex = 0;
 
-    private void Start()
+    private void OnEnable()
     {
-        if (items.Count > 0)
+        currentIndex = 0; // reset index ด้วยทุกครั้ง
+        
+        if (items.Count > 0 || allItems.Count > 0)
         {
             GenerateMemoryList();
+            FindObjectOfType<OrderValidator>().GenerateRequiredItems();
             ShowItem();
+        
+            memorizePanel.SetActive(true); // เปิด memorize panel ด้วย
+            budgetPanel.SetActive(false);
+            shoppingPanel.SetActive(false);
         }
     }
 

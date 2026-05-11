@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+using System.Collections;
 
 [System.Serializable]
 public class Guest
@@ -43,14 +44,51 @@ public class PartyGame : MonoBehaviour
     private List<Guest> selectedGuests = new List<Guest>();
     private Menu currentMenu;
 
+    [Header("Score")]
+    public TextMeshProUGUI scoreText;
+    private int totalScore = 100;
+    private int penaltyScore = 0; // เก็บแต้มที่โดนหักสะสมตลอดเกม
+
+    [Header("Final Score")]
+    private float timeElapsed = 0f;
+    private bool isTimerRunning = false;
+
+    [Header("Final Result")]
+    public TextMeshProUGUI finalScoreText;
+    public TextMeshProUGUI finalTimeText;
+
+    public GameObject popupCorrect;
+    public GameObject popupWrong;
+    public GameObject panelScore;
+
+    private bool gameFinished = false; // ป้องกัน ShowCorrect ถูกเรียกซ้ำ
+    private bool isChoosing = false;
+
+    // =========================
+    // Start
+    // =========================
     void Start()
     {
         panelInfo.SetActive(true);
         panelMenu.SetActive(false);
         panelSelect.SetActive(false);
 
+        popupCorrect.SetActive(false);
+        popupWrong.SetActive(false);
+
+        scoreText.text = "Score: " + totalScore;
+        isTimerRunning = true;
+
         GenerateGuests();
         ShowGuest();
+    }
+
+    void Update()
+    {
+        if (isTimerRunning)
+        {
+            timeElapsed += Time.deltaTime;
+        }
     }
 
     // =========================
@@ -107,7 +145,6 @@ public class PartyGame : MonoBehaviour
         panelMenu.SetActive(true);
         panelSelect.SetActive(false);
 
-        // สุ่มเมนู
         currentMenu = menus[Random.Range(0, menus.Count)];
 
         menuText.text =
@@ -119,11 +156,10 @@ public class PartyGame : MonoBehaviour
 
     // =========================
     // เช็คว่าแขกคนนี้กินได้ไหม
-    // (ใช้ใน STEP ต่อไป)
     // =========================
     public bool CanServe(Guest g)
     {
-        return g.allergy != currentMenu.ingredient;
+        return !currentMenu.ingredient.Contains(g.allergy);
     }
 
     // =========================
@@ -131,32 +167,72 @@ public class PartyGame : MonoBehaviour
     // =========================
     public void OnGuestSelected(int index)
     {
+        // กันกดซ้ำ
+        if (isChoosing || gameFinished)
+            return;
+
+        isChoosing = true;
+
         Guest g = selectedGuests[index];
 
         if (CanServe(g))
         {
             Debug.Log("CORRECT!");
-            Invoke("WinGame", 1f);
+            StartCoroutine(ShowCorrect());
         }
         else
         {
             Debug.Log("WRONG!");
-            // ❌ ยังไม่ reset (ตามที่โบอยากได้)
-        }
-    }
 
+            penaltyScore++;
+
+            totalScore = 100 - penaltyScore;
+
+            scoreText.text = "Score: " + totalScore;
+
+            StartCoroutine(ShowWrong());
+        }
+}
+
+    // =========================
+    // Win
+    // =========================
     void WinGame()
     {
-        Debug.Log("WIN!");
+        isTimerRunning = false;
 
-        ProgressData.instance.UpdateBestScore("ProMaid", GameManager.instance.score);
-        ProgressData.instance.CompleteQuest("ProMaid", 0);
-        StreakController.instance.AddStreak();
-        
-        gameObject.SetActive(false);
-        FindObjectOfType<ProMaidStoryController>().StartNextStory();
+        // คำนวณคะแนนด่านนี้จาก penalty ที่สะสมมา
+        totalScore = 100 - penaltyScore;
+
+        // โหลดคะแนนจากด่าน 1 และ 2
+        int level1Score = PlayerPrefs.GetInt("Level1Score", 0);
+        int level2Score = PlayerPrefs.GetInt("Level2Score", 0);
+        float level1Time = PlayerPrefs.GetFloat("Level1Time", 0f);
+        float level2Time = PlayerPrefs.GetFloat("Level2Time", 0f);
+
+        // รวมทั้ง 3 ด่าน
+        int finalScore = level1Score + level2Score + totalScore;
+        float finalTime = level1Time + level2Time + timeElapsed;
+
+        // Save
+        PlayerPrefs.SetInt("FinalScore", finalScore);
+        PlayerPrefs.SetFloat("FinalTime", finalTime);
+        PlayerPrefs.Save();
+
+        // แสดงผล
+        int minutes = Mathf.FloorToInt(finalTime / 60);
+        int seconds = Mathf.FloorToInt(finalTime % 60);
+
+        finalScoreText.text = finalScore.ToString();
+        finalTimeText.text = minutes + " m " + seconds + " s";
+
+        if (panelScore != null)
+            panelScore.SetActive(true);
     }
 
+    // =========================
+    // Setup Selection UI
+    // =========================
     public Image[] guestSlots;
     public TextMeshProUGUI[] guestNames;
 
@@ -178,5 +254,58 @@ public class PartyGame : MonoBehaviour
         SetupSelectionUI();
     }
 
-   
+    // =========================
+    // Popup Correct / Wrong
+    // =========================
+    IEnumerator ShowCorrect()
+    {
+        if (gameFinished) yield break;
+
+        gameFinished = true;
+
+        popupCorrect.SetActive(true);
+
+        yield return new WaitForSeconds(5f);
+
+        popupCorrect.SetActive(false);
+
+        isChoosing = false;
+
+        WinGame();
+    }
+    
+    IEnumerator ShowWrong()
+    {
+        popupWrong.SetActive(true);
+
+        yield return new WaitForSeconds(5f);
+
+        popupWrong.SetActive(false);
+
+        isChoosing = false;
+
+        RestartGame();
+    }
+
+    // =========================
+    // Restart (เฉพาะด่านนี้)
+    // =========================
+    void RestartGame()
+    {
+        currentIndex = 0;
+        timeElapsed = 0f;    // reset เวลาของด่านนี้
+        gameFinished = false; // reset flag
+
+        // penaltyScore ไม่ reset! สะสมต่อไปเรื่อยๆ
+        scoreText.text = "Score: " + (100 - penaltyScore);
+
+        panelInfo.SetActive(true);
+        panelMenu.SetActive(false);
+        panelSelect.SetActive(false);
+
+        GenerateGuests();
+        ShowGuest();
+
+        currentMenu = null;
+    }
 }

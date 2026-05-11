@@ -1,13 +1,13 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 public class ItemButton : MonoBehaviour
 {
-    public string itemName;              // ชื่อ item
-    public TextMeshProUGUI textUI;      // ตัวข้อความ
-    public HappyMarketGame game;        // ตัวเกมหลัก
+    public string itemName;
+    public TextMeshProUGUI textUI;
+    public HappyMarketGame game;
 
-    public void OnClick()
+    public void ClickItem()
     {
         game.OnItemClicked(itemName, textUI);
     }

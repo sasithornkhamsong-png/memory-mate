@@ -15,7 +15,7 @@ public class OrderValidator : MonoBehaviour
 
     private void Start()
     {
-        GenerateRequiredItems();
+        //GenerateRequiredItems();
     }
 
     // เอา budget ออก ไม่ต้องส่งมาแล้ว เพราะ ShopUIManager เช็คให้แล้ว
@@ -30,7 +30,8 @@ public class OrderValidator : MonoBehaviour
         foreach (RequiredItem required in requiredItems)
         {
             ShoppingItemUI foundItem = selectedItems.Find(
-                item => item.GetItem().itemName == required.itemName
+                item => item.GetItem().itemName.Trim().ToLower() ==
+                required.itemName.Trim().ToLower()
             );
 
             if (foundItem == null)
@@ -69,7 +70,8 @@ public class OrderValidator : MonoBehaviour
             }
 
             bool isRequired = requiredItems.Exists(
-                required => required.itemName == selectedName
+                required => required.itemName.Trim().ToLower() ==
+                selectedName.Trim().ToLower()
             );
 
             if (!isRequired)

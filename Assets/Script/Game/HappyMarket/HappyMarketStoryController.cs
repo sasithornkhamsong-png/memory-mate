@@ -11,7 +11,10 @@ public class HappyMarketStoryController : MonoBehaviour
     public GameObject panelCheckListGame;
     public GameObject panelShoppingGame;
     public GameObject panelSortingGame;
-    public GameObject panelScore; // สร้างทีหลังได้ ใส่ null ไปก่อน
+    public GameObject panelScore; 
+
+    [Header("Game Scripts")]
+    public HappyMarketGame happyMarketGame;
 
     private string[][] allStories;
     private int currentStorySet = 0;
@@ -21,22 +24,20 @@ public class HappyMarketStoryController : MonoBehaviour
     {
         allStories = new string[][]
         {
-            // ก่อน ShelfGame
             new string[]
             {
-                "ยินดีต้นรับ สู่ด่าน Happy Market",
-                "คุณมีภารกิจในวันนี้ คือ..."
+                "วันนี้มีตลาดเปิดใหม่ใกล้ ๆ หมู่บ้าน\nต้องแวะไปหาซื้อของเข้าบ้านสักหน่อยนะ",
+                "แต่แย่จัง กระดาษที่พกมาด้วยดันเปียกน้ำ\nต้องอาศัยความจำอันดีซะแล้ว\nว่าจดอะไรมาบ้าง"
             },
-            // ก่อน PartyGame
             new string[]
             {
-                "คุณทำภารกิจได้สำเร็จ!",
-                "ตอนนี้ได้เวลาของภารกิจต่อไป..."
+                "สำเร็จ ได้รายการที่จะต้องซื้อแล้ว!",
+                "อืม..\nแต่จำได้ว่าห้างตรงหัวมุม กำลังจัดช่วงลดราคา\nจะพลาดไม่ได้"
             },
             new string[]   // ← เพิ่มใหม่ ก่อน SortingGame
             {
-                "เกือบถึงแล้ว!",
-                "ภารกิจสุดท้ายรอคุณอยู่..."
+                "ซื้อของกลับมาแล้ว ใกล้ได้เวลาอาหารแล้วสินะ",
+                "มาเริ่มทำมื้อแรกกันเลยดีกว่า"
             },
             // หลังจบทุกด่าน
             new string[]
@@ -74,6 +75,7 @@ public class HappyMarketStoryController : MonoBehaviour
         if (currentStorySet == 0)
         {
             panelCheckListGame.SetActive(true);
+            happyMarketGame.StartChecklistGame(); // เรียกตรงๆ
         }
         else if (currentStorySet == 1)
         {
@@ -92,14 +94,22 @@ public class HappyMarketStoryController : MonoBehaviour
             else
                 Debug.Log("TODO: แสดงหน้าคะแนน");
         }
+
+         //currentStorySet++;
     }
 
     public void StartNextStory()
     {
+        Debug.Log("StartNextStory called! currentStorySet: " + currentStorySet);
         currentStorySet++;
         currentIndex = 0;
 
+        Debug.Log("panelStory is null: " + (panelStory == null));
+        Debug.Log("panelStory activeSelf before: " + panelStory.activeSelf);
+
         panelStory.SetActive(true);
+        Debug.Log("panelStory activeSelf after: " + panelStory.activeSelf);
+
         ShowStory();
     }
 }
