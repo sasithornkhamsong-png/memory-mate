@@ -4,57 +4,69 @@ using UnityEngine.SceneManagement;
 
 public class MissionManager : MonoBehaviour
 {
-    [Header("ช่อง UI แสดงข้อความภารกิจ")]
-    public TextMeshProUGUI playMissionText;      // ช่องสำหรับ "เล่นเกมครบ 3 ครั้ง"
-    public TextMeshProUGUI topScoreMissionText;  // ช่องสำหรับ "ได้อันดับหนึ่ง 3 ครั้ง"
+    [Header("Game Setting")]
+    public string game1Name = "HouseGame";
+    public string game2Name = "Promaid";
+    
+    [Header("UI Game 1 (House Game)")]
+    public TextMeshProUGUI game1PlayText;      // ภารกิจเล่นเกมที่ 1
+    public TextMeshProUGUI game1TopScoreText;  // ภารกิจได้อันดับ 1 ของเกมที่ 1
+
+    [Header("UI Game 2")]
+    public TextMeshProUGUI game2PlayText;      
+    public TextMeshProUGUI game2TopScoreText;  
 
     void Start()
     {
-        CheckMissions();
+        UpdateMissionUI();
     }
 
-    void CheckMissions()
+    void UpdateMissionUI()
     {
-        // 1. ดึงข้อมูลที่บันทึกไว้
-        int playCount = PlayerPrefs.GetInt("Mission_PlayCount", 0);
-        int topScoreCount = PlayerPrefs.GetInt("Mission_TopScoreCount", 0);
+        //--- เกมที่ 1 ---
+        DisplayMission(game1Name, "Game1_PlayCount", "Game1_TopScoreCount", game1PlayText, game1TopScoreText);
+        // --- เกมที่ 2 ---
+        DisplayMission(game2Name, "Mission_PlayCount", "Mission_TopScoreCount", game2PlayText, game2TopScoreText);
+    }
 
-        // 2. จัดการภารกิจ "เล่นเกมครบ 3 ครั้ง"
-        // ใช้ Mathf.Min เพื่อไม่ให้ตัวเลขโชว์เกิน 3 (เช่น ถ้าเล่นไป 5 รอบ ก็จะโชว์แค่ 3/3)
-        int displayPlay = Mathf.Min(playCount, 3); 
-        playMissionText.text = $"Play game 3 time  ( {displayPlay} / 3 )";
-        
-        if (playCount >= 3)
-        {
-            playMissionText.color = Color.green; // เปลี่ยนสีตัวอักษรเป็นสีเขียวเมื่อสำเร็จ
-            playMissionText.text += " - Done!";
+    // แสดงภารกิจ
+    void DisplayMission(string gameTitle, string playKey, string topKey, TextMeshProUGUI playUI, TextMeshProUGUI topUI)
+    {
+        if (playUI == null || topUI == null) return;
+
+        // 1. ภารกิจเล่นครบ 3 ครั้ง
+        int playCount = PlayerPrefs.GetInt(playKey, 0);
+        int dPlay = Mathf.Min(playCount, 3);
+
+        playUI.text = $"Play {gameTitle}  3 time ({dPlay}/3)";
+        //playUI.text = $"Play Game 3 times ({dPlay}/3)";
+
+        if (playCount >= 3) {
+            playUI.color = Color.green;
+            playUI.text += " - Done!";
         }
 
-        // 3. จัดการภารกิจ "สร้างสถิติอันดับหนึ่ง 3 ครั้ง"
-        int displayTopScore = Mathf.Min(topScoreCount, 3);
-        topScoreMissionText.text = $"Make new high score 3 time ( {displayTopScore} / 3 )";
+        // 2. ภารกิจได้อันดับหนึ่ง 3 ครั้ง
+        int topCount = PlayerPrefs.GetInt(topKey, 0);
+        int dTop = Mathf.Min(topCount, 3);
+
+        topUI.text = $"Top score of {gameTitle} 3 time ({dTop}/3)";
+        //topUI.text = $"Top Score 3 times ({dTop}/3)";
         
-        if (topScoreCount >= 3)
-        {
-            topScoreMissionText.color = Color.green;
-            topScoreMissionText.text += " - SUCCESS!";
+        if (topCount >= 3) {
+            topUI.color = Color.green;
+            topUI.text += " - SUCCESS!";
         }
     }
 
     public void GoToHome()
     {
-        SceneManager.LoadScene("Scene_Home");
-    }
-
-        public void PlayAgain()
-    {
-        // กลับไปด่าน 1
-        SceneManager.LoadScene("Scene_Level1"); 
+        SceneManager.LoadScene("MainMenu");
     }
 
         public void GoToStatistic()
     {
         // ไปหน้าสถิติ
-        SceneManager.LoadScene("Scene_Statistic"); 
+        SceneManager.LoadScene("stat_game1"); 
     }
 }

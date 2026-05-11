@@ -24,6 +24,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Game/HappyMarket.unity
     guid: 904aa78b5b2632040b5f01da541f324c
   - enabled: 1
+    path: Assets/Scenes/Game/FortuneSticks.unity
+    guid: 44a4716f258204b408bfad8312a88e3d
+  - enabled: 1
     path: Assets/Scenes/Scene_Level1.unity
     guid: a083e93213004474ab22466a1b1ac455
   - enabled: 1
@@ -32,6 +35,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Scene_Mission.unity
     guid: fd87fe282726c514eba1e1d219424406
+  - enabled: 1
+    path: Assets/Scenes/stat_game1.unity
+    guid: 4672fd1d20ecea6479d091306d7dce4e
   - enabled: 1
     path: Assets/Scenes/statistic_game2.unity
     guid: 8093cfe72f4f1074f8d07911683e36fb
