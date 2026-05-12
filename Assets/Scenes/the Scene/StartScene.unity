@@ -789,7 +789,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   bgmSource: {fileID: 612904257}
-  sfxSource: {fileID: 612904257}
+  sfxSource: {fileID: 612904260}
   clickClip: {fileID: 8300000, guid: d11b58e113c3f81418fc7a2debb8e41c, type: 3}
 --- !u!4 &612904259
 Transform:

@@ -5,14 +5,12 @@ public class SettingManager : MonoBehaviour
 {
     [Header("BGM")]
     public Toggle bgmToggle;
-    public AudioSource bgmSource;
 
     public Image bgmBackground;
     public RectTransform bgmKnob;
 
     [Header("SFX")]
     public Toggle sfxToggle;
-    public AudioSource sfxSource;
 
     public Image sfxBackground;
     public RectTransform sfxKnob;
@@ -38,10 +36,7 @@ public class SettingManager : MonoBehaviour
             bgmState
         );
 
-        bgmSource.mute = !bgmState;
-
-        if (!bgmSource.isPlaying)
-            bgmSource.Play();
+        AudioManager.instance.SetBGM(bgmState);
 
         // ===== SFX =====
         bool sfxState =
@@ -55,8 +50,8 @@ public class SettingManager : MonoBehaviour
             sfxState
         );
 
-        sfxSource.mute = !sfxState;
-    }
+        AudioManager.instance.SetSFX(sfxState);
+}
 
     // =========================
     // BGM
@@ -80,7 +75,7 @@ public class SettingManager : MonoBehaviour
     // =========================
     public void ToggleSFX(bool isOn)
     {
-        sfxSource.mute = !isOn;
+        AudioManager.instance.SetSFX(isOn);
 
         ApplyToggleVisual(
             sfxBackground,
