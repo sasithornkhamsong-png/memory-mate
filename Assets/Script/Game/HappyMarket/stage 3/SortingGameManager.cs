@@ -237,5 +237,13 @@ public class SortingGameManager : MonoBehaviour
 
         finalTimeText.text =
         minutes + " m " + seconds + " s";
+
+        //สะสมจำนวนครั้งที่เล่นจบเกมที่ 3
+        int currentPlay = PlayerPrefs.GetInt("Game3_PlayCount", 0);
+        PlayerPrefs.SetInt("Game3_PlayCount", currentPlay + 1);
+
+        //บันทึกสถิติลง 5 อันดับแรก
+        scoreGame3Manager.SaveEntry(finalScore, finalTime);
+        PlayerPrefs.Save();
     }
 }

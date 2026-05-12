@@ -27,6 +27,14 @@ public static class scoreGame1Manager
         string json = PlayerPrefs.GetString(PrefKey, "");
         ScoreList scoreList = string.IsNullOrEmpty(json) ? new ScoreList() : JsonUtility.FromJson<ScoreList>(json);
 
+        string currentDate = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
+        bool isDuplicate = scoreList.scores.Any(s => s.score == totalScore && s.time == totalTime && s.date == currentDate);    
+        if (isDuplicate) 
+        {
+            Debug.Log("Detected duplicate entry, skipping save.");
+            return;
+        }
+
         // 2. เพิ่มข้อมูลใหม่
         ScoreEntry newEntry = new ScoreEntry
         {
@@ -36,7 +44,7 @@ public static class scoreGame1Manager
         };
         scoreList.scores.Add(newEntry);
 
-        // 3. เรียงลำดับตามเงื่อนไข: คะแนนมาก่อน (Descending) ถ้าเท่ากันดูที่เวลา (Ascending)
+        // 3. เรียงลำดับตามเงื่อนไข: คะแนนมาก่อนถ้าคะแนนเท่ากันดูที่เวลา
         scoreList.scores = scoreList.scores
             .OrderByDescending(s => s.score)
             .ThenBy(s => s.time)
