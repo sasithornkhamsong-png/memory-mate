@@ -13,6 +13,93 @@ public class ProgressData : MonoBehaviour
             instance = this;
     }
 
+    // ======= บันทึกผลการเล่น =======
+    public void SaveGameResult(string gameName, int score, float time)
+    {
+        // ---------- Last Score ----------
+        PlayerPrefs.SetInt(gameName + "_LastScore", score);
+
+        // จำนวนครั้งที่เล่น
+        int playCount =
+            PlayerPrefs.GetInt(gameName + "_PlayCount", 0);
+
+        PlayerPrefs.SetInt(
+            gameName + "_PlayCount",
+            playCount + 1
+        );
+
+        // ---------- Best Score ----------
+        int bestScore = PlayerPrefs.GetInt(gameName + "_BestScore", 0);
+
+        bool isPersonalBest = false;
+
+        if (score > bestScore)
+        {
+            PlayerPrefs.SetInt(gameName + "_BestScore", score);
+            isPersonalBest = true;
+        }
+
+        // ---------- Best Time ----------
+        float bestTime = PlayerPrefs.GetFloat(gameName + "_BestTime", 0f);
+
+        if (bestTime == 0f || time < bestTime)
+        {
+            PlayerPrefs.SetFloat(gameName + "_BestTime", time);
+        }
+
+        // ---------- Recent 5 Days ----------
+        ShiftRecent(gameName);
+
+        if (isPersonalBest)
+            PlayerPrefs.SetInt(gameName + "_Recent_0", 2);
+        else
+            PlayerPrefs.SetInt(gameName + "_Recent_0", 1);
+
+        // ---------- Save Last Played Day ----------
+        string today = System.DateTime.Now.ToString("yyyyMMdd");
+        PlayerPrefs.SetString(gameName + "_LastPlayedDate", today);
+
+        // ---------- Progress ----------
+        UpdateProgress(gameName, score, isPersonalBest);
+
+        PlayerPrefs.Save();
+    }
+        //----------- Recent 5 Days ---------
+    void ShiftRecent(string gameName)
+    {
+        for (int i = 4; i > 0; i--)
+        {
+            int prev = PlayerPrefs.GetInt(gameName + "_Recent_" + (i - 1), 0);
+            PlayerPrefs.SetInt(gameName + "_Recent_" + i, prev);
+        }
+    }
+
+        //------------ New Progress ----------
+    void UpdateProgress(string gameName, int score, bool isPB)
+    {
+        float progress = PlayerPrefs.GetFloat(gameName + "_Progress", 0f);
+
+        // ===== ความสม่ำเสมอ =====
+        progress += 0.02f;
+
+        // ===== คะแนนพัฒนาการ =====
+        int lastScore = PlayerPrefs.GetInt(gameName + "_PreviousScore", 0);
+
+        if (score > lastScore)
+            progress += 0.03f;
+
+        // ===== Personal Best =====
+        if (isPB)
+            progress += 0.05f;
+
+        progress = Mathf.Clamp01(progress);
+
+        PlayerPrefs.SetFloat(gameName + "_Progress", progress);
+
+        // save previous
+        PlayerPrefs.SetInt(gameName + "_PreviousScore", score);
+    }
+
     // ======= บันทึกคะแนนสูงสุด =======
     public void UpdateBestScore(string gameName, int score)
     {
@@ -44,23 +131,65 @@ public class ProgressData : MonoBehaviour
 
     // ======= คำนวณ % ของแต่ละเกม =======
     // maxScore และ totalQuests ต้องกำหนดตามแต่ละเกม
-    public float GetProgress(string gameName, int maxScore, int totalQuests)
+    public float GetProgress(string gameName)
     {
-        // 70% มาจาก high score
-        float scorePercent = 0f;
-        if (maxScore > 0)
-            scorePercent = Mathf.Clamp01((float)GetBestScore(gameName) / maxScore) * 0.7f;
+        float progress = 0f;
 
-        // 30% มาจากภารกิจ
-        float questPercent = 0f;
-        if (totalQuests > 0)
+        // ===== ความสม่ำเสมอ 40% =====
+        int playCount =
+            PlayerPrefs.GetInt(gameName + "_PlayCount", 0);
+
+        progress += Mathf.Clamp01(playCount / 5f) * 0.4f;
+
+        // ===== คะแนนพัฒนาการ 40% =====
+        int bestScore =
+            GetBestScore(gameName);
+
+        progress += Mathf.Clamp01(bestScore / 300f) * 0.4f;
+
+        // ===== ความครบถ้วน 20% =====
+        int completedQuest = 0;
+
+        for (int i = 0; i < 3; i++)
         {
-            int completed = 0;
-            for (int i = 0; i < totalQuests; i++)
-                if (IsQuestComplete(gameName, i)) completed++;
-            questPercent = Mathf.Clamp01((float)completed / totalQuests) * 0.3f;
+            if (IsQuestComplete(gameName, i))
+                completedQuest++;
         }
 
-        return scorePercent + questPercent; // 0.0 - 1.0
+        progress += (completedQuest / 3f) * 0.2f;
+
+        return Mathf.Clamp01(progress);
+    }
+
+    void SaveRecent(string gameName, int score)
+    {
+        int bestScore =
+            PlayerPrefs.GetInt(gameName + "_BestScore", 0);
+
+        int resultType = 1;
+
+        // ทำลายสถิติ
+        if (score >= bestScore && bestScore > 0)
+        {
+            resultType = 2;
+        }
+
+        // เลื่อนข้อมูลเก่า
+        for (int i = 4; i > 0; i--)
+        {
+            int oldData =
+                PlayerPrefs.GetInt(gameName + "_Recent_" + (i - 1), 0);
+
+            PlayerPrefs.SetInt(
+                gameName + "_Recent_" + i,
+                oldData
+            );
+        }
+
+        // ใส่อันใหม่
+        PlayerPrefs.SetInt(
+            gameName + "_Recent_0",
+            resultType
+        );
     }
 }

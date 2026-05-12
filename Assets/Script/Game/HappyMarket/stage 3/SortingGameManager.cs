@@ -230,6 +230,11 @@ public class SortingGameManager : MonoBehaviour
             timeElapsed;
 
         finalScoreText.text = "" + finalScore;
+        ProgressData.instance.SaveGameResult(
+        "HappyMarket",
+        finalScore,
+        finalTime
+    );
         panelScore.SetActive(true);
 
         int minutes = Mathf.FloorToInt(finalTime / 60);
@@ -237,5 +242,11 @@ public class SortingGameManager : MonoBehaviour
 
         finalTimeText.text =
         minutes + " m " + seconds + " s";
+
+        ProgressData.instance.SaveGameResult(
+        "HappyMarket",
+        finalScore,
+        finalTime
+    );
     }
 }

@@ -254,6 +254,13 @@ public class FortuneSticksGame : MonoBehaviour
         int totalScore = scoreL1 + scoreL2 + scoreL3;
         float totalTime = timeL1 + timeL2 + timeL3;
 
+        // ส่งค่าไป Progress
+        ProgressData.instance.SaveGameResult(
+        "HouseGame",
+        totalScore,
+        totalTime
+    );
+
         // 3. แปลงเวลารวม (วินาที) ให้เป็นรูปแบบ นาที และ วินาที
         int minutes = Mathf.FloorToInt(totalTime / 60);
         int seconds = Mathf.FloorToInt(totalTime % 60);

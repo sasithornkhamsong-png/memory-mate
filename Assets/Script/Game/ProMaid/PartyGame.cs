@@ -226,6 +226,12 @@ public class PartyGame : MonoBehaviour
         finalScoreText.text = finalScore.ToString();
         finalTimeText.text = minutes + " m " + seconds + " s";
 
+        ProgressData.instance.SaveGameResult(
+        "ProMaid",
+        finalScore,
+        finalTime
+    );
+
         if (panelScore != null)
             panelScore.SetActive(true);
     }
