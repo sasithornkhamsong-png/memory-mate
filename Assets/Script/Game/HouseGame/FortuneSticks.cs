@@ -276,14 +276,14 @@ public class FortuneSticksGame : MonoBehaviour
             totalTimeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
         } 
 
+        //ส่งข้อมูลไปบันทึกลง 5 อันดับแรก
         scoreGame1Manager.SaveEntry(totalScore, totalTime);
 
         //สะสมจำนวนครั้งที่เล่นจบเกมที่ 1
         int currentPlay = PlayerPrefs.GetInt("Game1_PlayCount", 0);
         PlayerPrefs.SetInt("Game1_PlayCount", currentPlay + 1);
 
-        //บันทึกสถิติลง 5 อันดับแรก
-        scoreGame1Manager.SaveEntry(totalScore, totalTime);
+        //บันทึกลง PlayerPrefs
         PlayerPrefs.Save();
         
         ShowPanel(panelCongrats);
