@@ -243,6 +243,12 @@ public class SortingGameManager : MonoBehaviour
         finalTimeText.text =
         minutes + " m " + seconds + " s";
 
+        int currentPlay = PlayerPrefs.GetInt("Game3_PlayCount",0);
+        PlayerPrefs.SetInt("Game3_PlayCount",currentPlay+1);
+        
+        scoreGame3Manager.SaveEntry(finalScore, finalTime);
+        PlayerPrefs.Save();
+
         ProgressData.instance.SaveGameResult(
         "HappyMarket",
         finalScore,
