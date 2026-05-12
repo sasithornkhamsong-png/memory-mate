@@ -19,9 +19,9 @@ public class Score3List
 
 public static class scoreGame3Manager
 {
-    private const string PrefKey = "HighScores_Game2";
+    private const string PrefKey = "HighScores_Game3";
 
-    public static void SaveEntry(int FinalScore, float FinalTime)
+    public static void SaveEntry(int FinalScore3, float FinalTime3)
     {
         // 1. โหลดข้อมูลเดิม
         string json = PlayerPrefs.GetString(PrefKey, "");
@@ -30,8 +30,8 @@ public static class scoreGame3Manager
         // 2. เพิ่มข้อมูลใหม่
         Score3Entry newEntry = new Score3Entry
         {
-            score = FinalScore,
-            time = FinalTime,
+            score = FinalScore3,
+            time = FinalTime3,
             date = DateTime.Now.ToString("dd/MM/yyyy HH:mm")
         };
         score3List.scores.Add(newEntry);

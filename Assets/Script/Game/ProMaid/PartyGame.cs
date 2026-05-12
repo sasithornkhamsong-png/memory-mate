@@ -231,10 +231,8 @@ public class PartyGame : MonoBehaviour
             finalTime
         );
 
-        int currentPlay = PlayerPrefs.GetInt("Game2_PlayCount",0);
-        PlayerPrefs.SetInt("Game2_PlayCount",currentPlay+1);
-        
         scoreGame2Manager.SaveEntry(finalScore, finalTime);
+
         PlayerPrefs.Save();
         
         if (panelScore != null)
