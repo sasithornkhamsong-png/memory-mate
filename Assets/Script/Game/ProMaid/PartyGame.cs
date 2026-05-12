@@ -225,15 +225,16 @@ public class PartyGame : MonoBehaviour
 
         finalScoreText.text = finalScore.ToString();
         finalTimeText.text = minutes + " m " + seconds + " s";
+        ProgressData.instance.SaveGameResult(
+            "ProMaid",
+            finalScore,
+            finalTime
+        );
 
-        //สะสมจำนวนครั้งที่เล่นจบเกมที่ 2
-        int currentPlay = PlayerPrefs.GetInt("Game2_PlayCount", 0);
-        PlayerPrefs.SetInt("Game2_PlayCount", currentPlay + 1);
-
-        //บันทึกสถิติลง 5 อันดับแรก
         scoreGame2Manager.SaveEntry(finalScore, finalTime);
-        PlayerPrefs.Save();
 
+        PlayerPrefs.Save();
+        
         if (panelScore != null)
             panelScore.SetActive(true);
     }

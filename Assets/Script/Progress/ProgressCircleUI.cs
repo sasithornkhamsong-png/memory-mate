@@ -9,12 +9,11 @@ public class ProgressCircleUI : MonoBehaviour
 
     [Header("ตั้งค่าแต่ละเกม")]
     public string gameName;    // "HappyMarket" / "HouseGame" / "ProMaid"
-    public int maxScore;       // คะแนนเต็มของเกมนี้
-    public int totalQuests;    // จำนวนภารกิจทั้งหมด
 
     public void SetProgress()
     {
-        float progress = ProgressData.instance.GetProgress(gameName, maxScore, totalQuests);
+        float progress =
+            ProgressData.instance.GetProgress(gameName);
         circle.fillAmount = progress;
         percentText.text = Mathf.RoundToInt(progress * 100) + "%";
     }

@@ -1913,8 +1913,6 @@ MonoBehaviour:
   circle: {fileID: 1564887254}
   percentText: {fileID: 1319489230}
   gameName: ProMaidGame
-  maxScore: 0
-  totalQuests: 0
 --- !u!114 &119054482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7104,8 +7102,6 @@ MonoBehaviour:
   circle: {fileID: 571887448}
   percentText: {fileID: 738658426}
   gameName: HouseGame
-  maxScore: 0
-  totalQuests: 0
 --- !u!114 &493464216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8983,8 +8979,6 @@ MonoBehaviour:
   circle: {fileID: 621402434}
   percentText: {fileID: 156861313}
   gameName: HappyMarketGame
-  maxScore: 0
-  totalQuests: 0
 --- !u!114 &586745767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25552,10 +25546,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2073698834}
   - component: {fileID: 2073698833}
-  - component: {fileID: 2073698836}
   - component: {fileID: 2073698835}
   m_Layer: 0
-  m_Name: AudioManager
+  m_Name: ToggleManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25697,21 +25690,6 @@ MonoBehaviour:
   offColor: {r: 0.81886786, g: 0.81886786, b: 0.81886786, a: 1}
   knobOnX: -10
   knobOffX: -125
---- !u!114 &2073698836
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2073698832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba1410a23c22e694a8181cfecd56409d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
-  bgmSource: {fileID: 2073698833}
-  sfxSource: {fileID: 0}
-  clickClip: {fileID: 0}
 --- !u!1 &2093030738
 GameObject:
   m_ObjectHideFlags: 0
