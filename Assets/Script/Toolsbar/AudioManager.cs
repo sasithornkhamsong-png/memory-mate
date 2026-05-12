@@ -25,8 +25,10 @@ public class AudioManager : MonoBehaviour
     void Start()
     {
         bool bgmOn = PlayerPrefs.GetInt("BGMOn", 1) == 1;
+        bool sfxOn = PlayerPrefs.GetInt("SFXOn", 1) == 1;
 
         bgmSource.mute = !bgmOn;
+        sfxSource.mute = !sfxOn;
 
         if (!bgmSource.isPlaying)
             bgmSource.Play();
@@ -39,9 +41,20 @@ public class AudioManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    public void SetSFX(bool isOn)
+    {
+        sfxSource.mute = !isOn;
+
+        PlayerPrefs.SetInt("SFXOn", isOn ? 1 : 0);
+        PlayerPrefs.Save();
+    }
+
     public void PlaySFX(AudioClip clip)
     {
-        sfxSource.PlayOneShot(clip);
+        if (!sfxSource.mute)
+        {
+            sfxSource.PlayOneShot(clip);
+        }
     }
 
     public void PlayClick()

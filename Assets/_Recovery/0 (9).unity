@@ -563,7 +563,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -5608647119884254593, guid: 8e8c57303aab6eb4393902198d7ca904, type: 3}
+  m_Sprite: {fileID: -4178046375966092550, guid: 4484fbb95afc004458dae94b055c2ee6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -672,6 +672,7 @@ GameObject:
   - component: {fileID: 612904258}
   - component: {fileID: 612904257}
   - component: {fileID: 612904260}
+  - component: {fileID: 612904261}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -903,6 +904,30 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &612904261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612904256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71361a1e7210eaa47a9dd615b4cf8530, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SettingManager
+  bgmToggle: {fileID: 0}
+  bgmSource: {fileID: 0}
+  bgmBackground: {fileID: 0}
+  bgmKnob: {fileID: 0}
+  sfxToggle: {fileID: 0}
+  sfxSource: {fileID: 0}
+  sfxBackground: {fileID: 0}
+  sfxKnob: {fileID: 0}
+  onColor: {r: 0.2, g: 0.8, b: 0.2, a: 1}
+  offColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+  knobOnX: -10
+  knobOffX: -125
 --- !u!1 &1218667867
 GameObject:
   m_ObjectHideFlags: 0

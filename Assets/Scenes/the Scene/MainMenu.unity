@@ -1912,7 +1912,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProgressCircleUI
   circle: {fileID: 1564887254}
   percentText: {fileID: 1319489230}
-  gameName: ProMaidGame
+  gameName: ProMaid
 --- !u!114 &119054482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3735,7 +3735,7 @@ MonoBehaviour:
   greatSprite: {fileID: -5806429548128397179, guid: 249df13746b247b4c82c002dddcf59fd, type: 3}
   goodSprite: {fileID: -1421797311933737301, guid: 2ef8c5446808c78409210d3bc5c8dc64, type: 3}
   emptyColor: {r: 0.8274511, g: 0.8274511, b: 0.8274511, a: 1}
-  gameName: ProMaidGame
+  gameName: ProMaid
 --- !u!114 &213690428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4528,7 +4528,7 @@ MonoBehaviour:
   bestSprite: {fileID: 21300000, guid: 62e55515a4fa59749934ab75d892798b, type: 3}
   normalSprite: {fileID: 21300000, guid: 68d879a8a41e5d947a56c79355e81a2e, type: 3}
   badSprite: {fileID: 21300000, guid: cd930bf7a5085e541af520fe0531a1fa, type: 3}
-  gameName: ProMaidGame
+  gameName: ProMaid
 --- !u!114 &259801331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7371,6 +7371,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 632101071}
+        m_TargetAssemblyTypeName: ButtonSFX, Assembly-CSharp
+        m_MethodName: PlayClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &519291836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8978,7 +8990,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProgressCircleUI
   circle: {fileID: 621402434}
   percentText: {fileID: 156861313}
-  gameName: HappyMarketGame
+  gameName: HappyMarket
 --- !u!114 &586745767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9464,12 +9476,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 632101068}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 545.7762, y: 1070.8569, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2073698834}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &632101071
 MonoBehaviour:
@@ -12975,7 +12987,7 @@ MonoBehaviour:
   greatSprite: {fileID: -5806429548128397179, guid: 249df13746b247b4c82c002dddcf59fd, type: 3}
   goodSprite: {fileID: -1421797311933737301, guid: 2ef8c5446808c78409210d3bc5c8dc64, type: 3}
   emptyColor: {r: 0.8274511, g: 0.8274511, b: 0.8274511, a: 1}
-  gameName: HappyMarketGame
+  gameName: HappyMarket
 --- !u!114 &927337235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15391,6 +15403,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 632101071}
+        m_TargetAssemblyTypeName: ButtonSFX, Assembly-CSharp
+        m_MethodName: PlayClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1208690482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16184,6 +16208,50 @@ MonoBehaviour:
   bestScoreText: {fileID: 541279808}
   bestTimeText: {fileID: 129258276}
   gameName: HouseGame
+--- !u!1 &1276426683
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1276426685}
+  - component: {fileID: 1276426684}
+  m_Layer: 0
+  m_Name: NotificationManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1276426684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1276426683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e6382ba5fec2094aaaa88ad43cdf59d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NotificationManager
+--- !u!4 &1276426685
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1276426683}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 545.7762, y: 1070.8569, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1277847480
 GameObject:
   m_ObjectHideFlags: 0
@@ -22502,7 +22570,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StatsUI
   bestScoreText: {fileID: 1856691803}
   bestTimeText: {fileID: 749074163}
-  gameName: ProMaidGame
+  gameName: ProMaid
 --- !u!1 &1739851695
 GameObject:
   m_ObjectHideFlags: 0
@@ -22672,7 +22740,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StatsUI
   bestScoreText: {fileID: 841578165}
   bestTimeText: {fileID: 1565985816}
-  gameName: HappyMarketGame
+  gameName: HappyMarket
 --- !u!1 &1763831365
 GameObject:
   m_ObjectHideFlags: 0
@@ -25307,7 +25375,7 @@ MonoBehaviour:
   bestSprite: {fileID: 21300000, guid: 62e55515a4fa59749934ab75d892798b, type: 3}
   normalSprite: {fileID: 21300000, guid: 68d879a8a41e5d947a56c79355e81a2e, type: 3}
   badSprite: {fileID: 21300000, guid: cd930bf7a5085e541af520fe0531a1fa, type: 3}
-  gameName: HappyMarketGame
+  gameName: HappyMarket
 --- !u!114 &2059278245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25547,6 +25615,7 @@ GameObject:
   - component: {fileID: 2073698834}
   - component: {fileID: 2073698833}
   - component: {fileID: 2073698835}
+  - component: {fileID: 2073698836}
   m_Layer: 0
   m_Name: ToggleManager
   m_TagString: Untagged
@@ -25663,7 +25732,8 @@ Transform:
   m_LocalPosition: {x: 545.7762, y: 1070.8569, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 632101070}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2073698835
@@ -25690,6 +25760,21 @@ MonoBehaviour:
   offColor: {r: 0.81886786, g: 0.81886786, b: 0.81886786, a: 1}
   knobOnX: -10
   knobOffX: -125
+--- !u!114 &2073698836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2073698832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba1410a23c22e694a8181cfecd56409d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  bgmSource: {fileID: 2073698833}
+  sfxSource: {fileID: 632101069}
+  clickClip: {fileID: 8300000, guid: d11b58e113c3f81418fc7a2debb8e41c, type: 3}
 --- !u!1 &2093030738
 GameObject:
   m_ObjectHideFlags: 0
@@ -26333,4 +26418,4 @@ SceneRoots:
   - {fileID: 1171735300}
   - {fileID: 2057595636}
   - {fileID: 2073698834}
-  - {fileID: 632101070}
+  - {fileID: 1276426685}
