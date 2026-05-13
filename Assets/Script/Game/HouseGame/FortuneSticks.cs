@@ -283,6 +283,13 @@ public class FortuneSticksGame : MonoBehaviour
         int currentPlay = PlayerPrefs.GetInt("Game1_PlayCount", 0);
         PlayerPrefs.SetInt("Game1_PlayCount", currentPlay + 1);
 
+        // ภารกิจทำคะแนนมากกว่า 290 คะแนน
+        if (totalScore > 290)
+        {
+            int currentHighCount1 = PlayerPrefs.GetInt("Game1_HighScoreQuest", 0);
+            PlayerPrefs.SetInt("Game1_HighScoreQuest", currentHighCount1 + 1);
+        }
+
         //บันทึกลง PlayerPrefs
         PlayerPrefs.Save();
         
