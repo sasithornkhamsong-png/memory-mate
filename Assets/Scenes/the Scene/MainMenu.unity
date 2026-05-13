@@ -3084,7 +3084,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &191747129
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3630,9 +3630,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1688770504}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 350, y: -50}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &209128214
@@ -6198,9 +6198,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1688770504}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 200, y: -50}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &397975360
@@ -20206,9 +20206,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1688770504}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 50, y: -50}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1580013885
@@ -25551,11 +25551,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SettingManager
   bgmToggle: {fileID: 235512248}
-  bgmSource: {fileID: 0}
   bgmBackground: {fileID: 1598153777}
   bgmKnob: {fileID: 669152814}
   sfxToggle: {fileID: 1139803671}
-  sfxSource: {fileID: 0}
   sfxBackground: {fileID: 2093030740}
   sfxKnob: {fileID: 331104593}
   onColor: {r: 0.20784315, g: 0.7803922, b: 0.34509805, a: 1}

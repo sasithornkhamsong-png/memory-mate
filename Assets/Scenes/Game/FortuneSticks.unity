@@ -1787,7 +1787,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 276895049}
         m_TargetAssemblyTypeName: FortuneSticksGame, Assembly-CSharp
-        m_MethodName: PressClear
+        m_MethodName: OnClickStat
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
