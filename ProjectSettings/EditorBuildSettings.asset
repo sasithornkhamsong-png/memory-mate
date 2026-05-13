@@ -39,6 +39,12 @@ EditorBuildSettings:
     path: Assets/Scenes/stat_game1.unity
     guid: 4672fd1d20ecea6479d091306d7dce4e
   - enabled: 1
+    path: Assets/Scenes/stat_game2.unity
+    guid: 074d91e54b319394bbfc496016af2503
+  - enabled: 1
+    path: Assets/Scenes/stat_game3.unity
+    guid: 48dd2679f3cbb814eb06f293034593cd
+  - enabled: 0
     path: Assets/Scenes/statistic_game2.unity
     guid: 8093cfe72f4f1074f8d07911683e36fb
   m_configObjects:

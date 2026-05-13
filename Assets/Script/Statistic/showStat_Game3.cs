@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class ShowStat_Game3 : MonoBehaviour
 {
@@ -82,4 +83,15 @@ public class ShowStat_Game3 : MonoBehaviour
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
     }
+
+    public void GoToTop5Game1()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("stat_game1");
+    }
+
+    public void GoToTop5Game2()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("stat_game2");
+    }
+
 }
