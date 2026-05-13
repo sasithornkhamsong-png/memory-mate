@@ -232,6 +232,16 @@ public class PartyGame : MonoBehaviour
         );
 
         scoreGame2Manager.SaveEntry(finalScore, finalTime);
+        
+         int currentPlay = PlayerPrefs.GetInt("Game2_PlayCount", 0);
+        PlayerPrefs.SetInt("Game2_PlayCount", currentPlay + 1);
+
+        // ภารกิจทำคะแนนมากกว่า 290 คะแนน
+        if (finalScore > 290)
+        {
+            int currentHighCount2 = PlayerPrefs.GetInt("Game2_HighScoreQuest", 0);
+            PlayerPrefs.SetInt("Game2_HighScoreQuest", currentHighCount2 + 1);
+        }
 
         PlayerPrefs.Save();
         

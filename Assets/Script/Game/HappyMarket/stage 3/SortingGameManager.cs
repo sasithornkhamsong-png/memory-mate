@@ -232,6 +232,17 @@ public class SortingGameManager : MonoBehaviour
         PlayerPrefs.SetInt("FinalScore3",finalScore);
         PlayerPrefs.SetFloat("FinalTime3",finalTime);
         scoreGame3Manager.SaveEntry(finalScore,finalTime);
+        
+        int currentPlay = PlayerPrefs.GetInt("Game3_PlayCount", 0);
+        PlayerPrefs.SetInt("Game3_PlayCount", currentPlay + 1);
+
+        // ภารกิจทำคะแนนมากกว่า 290 คะแนน
+        if (finalScore > 290)
+        {
+            int currentHighCount3 = PlayerPrefs.GetInt("Game3_HighScoreQuest", 0);
+            PlayerPrefs.SetInt("Game3_HighScoreQuest", currentHighCount3 + 1);
+        }
+        
         PlayerPrefs.Save();
 
 

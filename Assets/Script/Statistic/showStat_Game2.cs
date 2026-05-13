@@ -82,4 +82,14 @@ public class ShowStat_Game2 : MonoBehaviour
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
     }
+
+    public void GoToTop5Game1()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("stat_game1");
+    }
+
+    public void GoToTop5Game3()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("stat_game3");
+    }
 }
