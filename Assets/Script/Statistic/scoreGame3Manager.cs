@@ -27,6 +27,25 @@ public static class scoreGame3Manager
         string json = PlayerPrefs.GetString(PrefKey, "");
         Score3List score3List = string.IsNullOrEmpty(json) ? new Score3List() : JsonUtility.FromJson<Score3List>(json);
 
+// --- เริ่มต้น: ระบบตรวจสอบภารกิจทำลายสถิติอันดับ 1 ---
+        if (score3List.scores.Count > 0)
+        {
+            Score3Entry currentTop = score3List.scores[0]; 
+            bool isNewRecord = false;
+
+            if (FinalScore3 > currentTop.score) {
+                isNewRecord = true;
+            } else if (FinalScore3 == currentTop.score && FinalTime3 < currentTop.time) {
+                isNewRecord = true;
+            }
+
+            if (isNewRecord) {
+                int breakRecordCount = PlayerPrefs.GetInt("Game3_BreakTopScoreQuest", 0);
+                PlayerPrefs.SetInt("Game3_BreakTopScoreQuest", breakRecordCount + 1);
+            }
+        }
+        // --- สิ้นสุด: ระบบตรวจสอบภารกิจ ---
+
         // 2. เพิ่มข้อมูลใหม่
         Score3Entry newEntry = new Score3Entry
         {

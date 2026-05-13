@@ -4,63 +4,144 @@ using UnityEngine.SceneManagement;
 
 public class MissionManager : MonoBehaviour
 {
+    [Header("Star System UI")]
+    public TextMeshProUGUI starCountText;
+    
     [Header("Game Names")]
     public string game1Name = "HouseGame";
     public string game2Name = "ProMaid";
     public string game3Name = "HappyMarket";
 
-    [Header("Mission UI: Play Count (เล่นครบ 3 ครั้ง)")]
-    public TextMeshProUGUI mission1Text; // ภารกิจที่ 1: เล่น HouseGame
-    public TextMeshProUGUI mission2Text; // ภารกิจที่ 2: เล่น ProMaid
-    public TextMeshProUGUI mission3Text; // ภารกิจที่ 3: เล่น HappyMarket
+    [Header(" Game1_m1 : เล่นครบ 3 ครั้ง")]
+    public TextMeshProUGUI m1DescText;      // ช่องสำหรับคำอธิบาย
+    public TextMeshProUGUI m1ProgressText;  // ช่องสำหรับตัวเลข (เช่น 0/3)
 
-    [Header("Mission UI: High Score (คะแนน > 290 ครบ 3 ครั้ง)")]
-    public TextMeshProUGUI mission4Text; // ภารกิจที่ 4: HouseGame > 290
-    public TextMeshProUGUI mission5Text; // ภารกิจที่ 5: ProMaid > 290
-    public TextMeshProUGUI mission6Text; // ภารกิจที่ 6: HappyMarket > 290
+    [Header("Game2_m1: เล่นครบ 3 ครั้ง")]
+    public TextMeshProUGUI m2DescText;
+    public TextMeshProUGUI m2ProgressText;
+
+    [Header("Game3_m1: เล่นครบ 3 ครั้ง")]
+    public TextMeshProUGUI m3DescText;
+    public TextMeshProUGUI m3ProgressText;
+
+    [Header("Game1_m2: คะแนน > 290 (3 ครั้ง)")]
+    public TextMeshProUGUI m4DescText;
+    public TextMeshProUGUI m4ProgressText;
+
+    [Header("Game2_m2: คะแนน > 290 (3 ครั้ง)")]
+    public TextMeshProUGUI m5DescText;
+    public TextMeshProUGUI m5ProgressText;
+
+    [Header("Game3_m2: คะแนน > 290 (3 ครั้ง)")]
+    public TextMeshProUGUI m6DescText;
+    public TextMeshProUGUI m6ProgressText;
+
+    [Header("Game1_m3: ทำลายสถิติที่ 1")]
+    public TextMeshProUGUI m7DescText;
+    public TextMeshProUGUI m7ProgressText;
+
+    [Header("Game2_m3: ทำลายสถิติที่ 1 ")]
+    public TextMeshProUGUI m8DescText;
+    public TextMeshProUGUI m8ProgressText;
+
+    [Header("Game3_m3: ทำลายสถิติที่ 1")]
+    public TextMeshProUGUI m9DescText;
+    public TextMeshProUGUI m9ProgressText;
 
     void Start()
     {
         UpdateAllMissions();
+        UpdateStarUI();
     }
 
     void UpdateAllMissions()
     {
-        // --- ภารกิจ 1-3: เล่นเกมครบ 3 ครั้ง ---
-        DisplayMission($"Play {game1Name} ", "Game1_PlayCount", 3, mission1Text);
-        DisplayMission($"Play {game2Name} ", "Game2_PlayCount", 3, mission2Text);
-        DisplayMission($"Play {game3Name} ", "Game3_PlayCount", 3, mission3Text);
+        // --- ภารกิจเล่นเกมครบ 3 ครั้ง ---
+        DisplayMission(1, $"Play {game1Name} 3 times", "Game1_PlayCount", 3, m1DescText, m1ProgressText);
+        DisplayMission(2, $"Play {game2Name} 3 times", "Game2_PlayCount", 3, m2DescText, m2ProgressText);
+        DisplayMission(3, $"Play {game3Name} 3 times", "Game3_PlayCount", 3, m3DescText, m3ProgressText);
 
-        // --- ภารกิจ 4-6: ทำคะแนนมากกว่า 290 คะแนน จำนวน 3 ครั้ง ---
-        DisplayMission($"Make {game1Name} Score > 290", "Game1_HighScoreQuest", 3, mission4Text);
-        DisplayMission($"Make {game2Name} Score > 290", "Game2_HighScoreQuest", 3, mission5Text);
-        DisplayMission($"Make {game3Name} Score > 290", "Game3_HighScoreQuest", 3, mission6Text);
+        // --- ภารกิจทำคะแนนมากกว่า 290 คะแนน จำนวน 3 ครั้ง ---
+        DisplayMission(4, $"Make {game1Name} score > 290", "Game1_HighScoreQuest", 3, m4DescText, m4ProgressText);
+        DisplayMission(5, $"Make {game2Name} score > 290", "Game2_HighScoreQuest", 3, m5DescText, m5ProgressText);
+        DisplayMission(6, $"Make {game3Name} score > 290", "Game3_HighScoreQuest", 3, m6DescText, m6ProgressText);
+
+        // --- ภารกิจทำลายสถิติอันดับ 1 เดิม ---
+        DisplayMission(7, $"Break highest score {game1Name}", "Game1_BreakTopScoreQuest", 1, m7DescText, m7ProgressText);
+        DisplayMission(8, $"Break highest score  {game2Name}", "Game2_BreakTopScoreQuest", 1, m8DescText, m8ProgressText);
+        DisplayMission(9, $"Break highest score  {game3Name}", "Game3_BreakTopScoreQuest", 1, m9DescText, m9ProgressText);
     }
 
-    // ฟังก์ชันสำหรับจัดรูปแบบข้อความและตรวจสอบความสำเร็จ
-    void DisplayMission(string description, string prefsKey, int targetCount, TextMeshProUGUI uiText)
+    void DisplayMission(int missionID, string description, string prefsKey, int targetCount, TextMeshProUGUI descUI, TextMeshProUGUI progressUI)
     {
-        if (uiText == null) return;
+        if (descUI == null || progressUI == null) return;
 
         int currentCount = PlayerPrefs.GetInt(prefsKey, 0);
-        int displayCount = Mathf.Min(currentCount, targetCount); // ป้องกันตัวเลขเกินเป้าหมาย (เช่น 4/3 ให้เป็น 3/3)
+        int displayCount = Mathf.Min(currentCount, targetCount); 
 
-        uiText.text = $"{description} ({displayCount}/{targetCount})";
+        // 1. ใส่ข้อความคำอธิบาย
+        descUI.text = description;
+        
+        // 2. ใส่ข้อความความคืบหน้า (เช่น 1/3)
+        progressUI.text = $"{displayCount}/{targetCount}";
 
+        // 3. ตรวจสอบความสำเร็จ
         if (currentCount >= targetCount)
         {
-            uiText.color = Color.green;
-            uiText.text += " - Done!";
+            // เปลี่ยนสีเป็นสีเขียวทั้งสองช่องเมื่อทำสำเร็จ
+            descUI.color = Color.green;
+            progressUI.color = Color.green;
+            
+            // เปลี่ยนตัวเลขเป็นคำว่าสำเร็จ (หรือจะคง 3/3 ไว้ก็ได้ตามต้องการ)
+            progressUI.text = "DONE!";
+
+            AwardStar(missionID); 
         }
         else
         {
-            uiText.color = Color.white; // สีตั้งต้นเมื่อยังไม่สำเร็จ
+            // เปลี่ยนสีกลับเป็นสีขาว (หรือสีตั้งต้นของคุณ) เมื่อยังไม่สำเร็จ
+            descUI.color = Color.black; 
+            progressUI.color = Color.black; 
         }
     }
 
-    // ปุ่มกลับหน้าหลัก
+    void AwardStar(int missionID)
+    {
+        string starKey = "MissionStar_" + missionID; // เช่น MissionStar_1
+        
+        // เช็คว่าภารกิจนี้เคยได้ดาวไปหรือยัง (0 = ยังไม่เคย, 1 = ได้แล้ว)
+        if (PlayerPrefs.GetInt(starKey, 0) == 0)
+        {
+            // เพิ่มดาวรวม
+            int currentTotalStars = PlayerPrefs.GetInt("TotalStars", 0);
+            PlayerPrefs.SetInt("TotalStars", currentTotalStars + 1);
+            
+            // ทำเครื่องหมายว่าภารกิจนี้ได้ดาวไปแล้ว
+            PlayerPrefs.SetInt(starKey, 1);
+            PlayerPrefs.Save();
+
+            UpdateStarUI(); // อัปเดตการแสดงผลทันที
+            Debug.Log("Mission " + missionID + " Completed! Star Awarded.");
+        }
+    }
+
+    void UpdateStarUI()
+    {
+        if (starCountText != null)
+        {
+            int total = PlayerPrefs.GetInt("TotalStars", 0);
+            starCountText.text = total.ToString(); // แสดงจำนวนดาวรวม
+        }
+    }
+
+
     public void GoToHome()
     {
-        SceneManager.LoadScene("MainMenu"); // เปลี่ยนชื่อเป็น Scene หน้า Home ของคุณ
+        SceneManager.LoadScene("MainMenu"); 
+    }
+
+        public void GoToRank5()
+    {
+        SceneManager.LoadScene("stat_game1"); 
     }
 }

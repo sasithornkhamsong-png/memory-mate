@@ -35,6 +35,24 @@ public static class scoreGame1Manager
             return;
         }
 
+        if (scoreList.scores.Count > 0)
+        {
+            ScoreEntry currentTop = scoreList.scores[0]; // ดึงอันดับ 1 ปัจจุบันมาดู
+            bool isNewRecord = false;
+
+            // เทียบว่าคะแนนใหม่มากกว่า หรือ คะแนนเท่ากันแต่เวลาน้อยกว่า
+            if (totalScore > currentTop.score) {
+                isNewRecord = true;
+            } else if (totalScore == currentTop.score && totalTime < currentTop.time) {
+                isNewRecord = true;
+            }
+
+            if (isNewRecord) {
+                int breakRecordCount = PlayerPrefs.GetInt("Game1_BreakTopScoreQuest", 0);
+                PlayerPrefs.SetInt("Game1_BreakTopScoreQuest", breakRecordCount + 1);
+            }
+        } 
+
         // 2. เพิ่มข้อมูลใหม่
         ScoreEntry newEntry = new ScoreEntry
         {

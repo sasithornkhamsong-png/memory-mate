@@ -27,6 +27,26 @@ public static class scoreGame2Manager
         string json = PlayerPrefs.GetString(PrefKey, "");
         Score2List score2List = string.IsNullOrEmpty(json) ? new Score2List() : JsonUtility.FromJson<Score2List>(json);
 
+        // --- เริ่มต้น: ระบบตรวจสอบภารกิจทำลายสถิติอันดับ 1 ---
+        if (score2List.scores.Count > 0)
+        {
+            Score2Entry currentTop = score2List.scores[0]; 
+            bool isNewRecord = false;
+
+            if (FinalScore > currentTop.score) {
+                isNewRecord = true;
+            } else if (FinalScore == currentTop.score && FinalTime < currentTop.time) {
+                isNewRecord = true;
+            }
+
+            if (isNewRecord) {
+                int breakRecordCount = PlayerPrefs.GetInt("Game2_BreakTopScoreQuest", 0);
+                PlayerPrefs.SetInt("Game2_BreakTopScoreQuest", breakRecordCount + 1);
+            }
+        }
+        // --- สิ้นสุด: ระบบตรวจสอบภารกิจ ---
+        
+        
         // 2. เพิ่มข้อมูลใหม่
         Score2Entry newEntry = new Score2Entry
         {
