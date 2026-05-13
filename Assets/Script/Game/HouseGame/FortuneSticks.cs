@@ -9,11 +9,13 @@ public class FortuneSticksGame : MonoBehaviour
 {
     [Header("Panels")]
     public GameObject panelStory;
+    public GameObject panelStory2;
     public GameObject panelRules;
     public GameObject panelShake;
     public GameObject panelShowNumber;
     public GameObject panelInput;
     public GameObject panelCongrats;
+    public GameObject panelCalculator;
 
     [Header("Show Number UI")]
     public TextMeshProUGUI numberText;
@@ -117,6 +119,11 @@ public class FortuneSticksGame : MonoBehaviour
 
     // ================= ฟังก์ชันปุ่มสลับ Panel =================
 
+    public void OnClickNextToStory2()
+    {
+        ShowPanel(panelStory2);
+    }
+
     public void OnClickNextToRules()
     {
         ShowPanel(panelRules);
@@ -131,11 +138,14 @@ public class FortuneSticksGame : MonoBehaviour
     private void ShowPanel(GameObject panelToShow)
     {
         panelStory.SetActive(false);
+        panelStory2.SetActive(false);
         panelRules.SetActive(false);
         panelShake.SetActive(false);
         panelShowNumber.SetActive(false);
         panelInput.SetActive(false);
         panelCongrats.SetActive(false);
+
+        if (panelCalculator != null) panelCalculator.SetActive(false);
 
         panelToShow.SetActive(true);
     }
@@ -173,8 +183,14 @@ public class FortuneSticksGame : MonoBehaviour
         }
         else
         {
-            StartInputPhase();
+            //StartInputPhase();
+            ShowPanel(panelCalculator);
         }
+    }
+
+    public void OnClickNextToInput()
+    {
+        StartInputPhase(); // เรียกฟังก์ชันตอบคำถามและเริ่มจับเวลาต่อ
     }
 
     // ================= ระบบตอบคำถาม =================
@@ -193,6 +209,15 @@ public class FortuneSticksGame : MonoBehaviour
         inputText.text = "";
         resultText.text = "";
         helpDisplayText.text = "";
+    }
+
+    public void OnClickBackToCalculator()
+    {
+
+        playerScore--;
+        if (playerScore < 0) playerScore = 0;
+
+        ShowPanel(panelCalculator);
     }
 
     public void PressNumber(string num)
@@ -345,6 +370,7 @@ public class FortuneSticksGame : MonoBehaviour
         // ล้างข้อความทิ้ง
         resultText.text = "";
     }
+
 
     public void OnClickPlayAgain()
     {
