@@ -196,6 +196,58 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 58597991}
   m_CullTransparentMesh: 1
+--- !u!1 &152529527
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 152529529}
+  - component: {fileID: 152529528}
+  m_Layer: 0
+  m_Name: PageController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &152529528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152529527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9841f59142fa75646842b58c52ef163f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PageController
+  homeScreen: {fileID: 0}
+  chartScreen: {fileID: 0}
+  questScreen: {fileID: 0}
+  settingScreen: {fileID: 0}
+  topBarImage: {fileID: 0}
+  bottomBar: {fileID: 0}
+  homeColor: {r: 0, g: 0, b: 0, a: 0}
+  normalColor: {r: 0, g: 0, b: 0, a: 0}
+--- !u!4 &152529529
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152529527}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 618.6095, y: 1664.0802, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &164792457
 GameObject:
   m_ObjectHideFlags: 0
@@ -1166,7 +1218,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1118497009}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 152529528}
+        m_TargetAssemblyTypeName: PageController, Assembly-CSharp
+        m_MethodName: ShowChart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1118497009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2053,7 +2117,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1474291895}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 152529528}
+        m_TargetAssemblyTypeName: PageController, Assembly-CSharp
+        m_MethodName: ShowQuest
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1474291895
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2530,7 +2606,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1704601723}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 152529528}
+        m_TargetAssemblyTypeName: PageController, Assembly-CSharp
+        m_MethodName: ShowSetting
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1704601723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3185,3 +3273,4 @@ SceneRoots:
   - {fileID: 164792458}
   - {fileID: 2068199852}
   - {fileID: 1860011952}
+  - {fileID: 152529529}

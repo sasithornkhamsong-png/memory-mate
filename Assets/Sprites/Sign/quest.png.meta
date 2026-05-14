@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 652f2bf98642c7648a49291a78425d67
+guid: 22b0f42d4d29e8c4982a9cf1c90f8a69
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1321956513208408990
-    second: hanger_0
+      213: 7170880393122851562
+    second: quest_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,30 +96,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: hanger_0
+      name: quest_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 77
-        width: 512
-        height: 358
+        x: 8
+        y: 8
+        width: 496
+        height: 496
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 264e2b52e8777ade0800000000000000
-      internalID: -1321956513208408990
+      spriteID: aeaa6ee79b5148360800000000000000
+      internalID: 7170880393122851562
       vertices: []
       indices: 
       edges: []
@@ -148,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      hanger_0: -1321956513208408990
+      quest_0: 7170880393122851562
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

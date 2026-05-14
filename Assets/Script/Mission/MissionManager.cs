@@ -8,9 +8,9 @@ public class MissionManager : MonoBehaviour
     public TextMeshProUGUI starCountText;
     
     [Header("Game Names")]
-    public string game1Name = "HouseGame";
-    public string game2Name = "ProMaid";
-    public string game3Name = "HappyMarket";
+    public string game1Name = "บ้านปิดตาย";
+    public string game2Name = "แม่บ้านมืออาชีพ";
+    public string game3Name = "แฮปปี้มาร์เก็ต";
 
     [Header(" Game1_m1 : เล่นครบ 3 ครั้ง")]
     public TextMeshProUGUI m1DescText;      // ช่องสำหรับคำอธิบาย
@@ -57,19 +57,19 @@ public class MissionManager : MonoBehaviour
     void UpdateAllMissions()
     {
         // --- ภารกิจเล่นเกมครบ 3 ครั้ง ---
-        DisplayMission(1, $"Play {game1Name} 3 times", "Game1_PlayCount", 3, m1DescText, m1ProgressText);
-        DisplayMission(2, $"Play {game2Name} 3 times", "Game2_PlayCount", 3, m2DescText, m2ProgressText);
-        DisplayMission(3, $"Play {game3Name} 3 times", "Game3_PlayCount", 3, m3DescText, m3ProgressText);
+        DisplayMission(1, $"เล่นเกม{game1Name} 3 ครั้ง", "Game1_PlayCount", 3, m1DescText, m1ProgressText);
+        DisplayMission(2, $"เล่นเกม{game2Name} 3 ครั้ง", "Game2_PlayCount", 3, m2DescText, m2ProgressText);
+        DisplayMission(3, $"เล่นเกม{game3Name} 3 ครั้ง", "Game3_PlayCount", 3, m3DescText, m3ProgressText);
 
         // --- ภารกิจทำคะแนนมากกว่า 290 คะแนน จำนวน 3 ครั้ง ---
-        DisplayMission(4, $"Make {game1Name} score > 290", "Game1_HighScoreQuest", 3, m4DescText, m4ProgressText);
-        DisplayMission(5, $"Make {game2Name} score > 290", "Game2_HighScoreQuest", 3, m5DescText, m5ProgressText);
-        DisplayMission(6, $"Make {game3Name} score > 290", "Game3_HighScoreQuest", 3, m6DescText, m6ProgressText);
+        DisplayMission(4, $"ทำคะแนนเกม{game1Name} > 290", "Game1_HighScoreQuest", 3, m4DescText, m4ProgressText);
+        DisplayMission(5, $"ทำคะแนนเกม{game2Name} > 290", "Game2_HighScoreQuest", 3, m5DescText, m5ProgressText);
+        DisplayMission(6, $"ทำคะแนนเกม{game3Name} > 290", "Game3_HighScoreQuest", 3, m6DescText, m6ProgressText);
 
         // --- ภารกิจทำลายสถิติอันดับ 1 เดิม ---
-        DisplayMission(7, $"Break highest score {game1Name}", "Game1_BreakTopScoreQuest", 1, m7DescText, m7ProgressText);
-        DisplayMission(8, $"Break highest score  {game2Name}", "Game2_BreakTopScoreQuest", 1, m8DescText, m8ProgressText);
-        DisplayMission(9, $"Break highest score  {game3Name}", "Game3_BreakTopScoreQuest", 1, m9DescText, m9ProgressText);
+        DisplayMission(7, $"ทำลายสถิติเกม{game1Name}", "Game1_BreakTopScoreQuest", 1, m7DescText, m7ProgressText);
+        DisplayMission(8, $"ทำลายสถิติเกม{game2Name}", "Game2_BreakTopScoreQuest", 1, m8DescText, m8ProgressText);
+        DisplayMission(9, $"ทำลายสถิติเกม{game3Name}", "Game3_BreakTopScoreQuest", 1, m9DescText, m9ProgressText);
     }
 
     void DisplayMission(int missionID, string description, string prefsKey, int targetCount, TextMeshProUGUI descUI, TextMeshProUGUI progressUI)
@@ -99,7 +99,7 @@ public class MissionManager : MonoBehaviour
         }
         else
         {
-            // เปลี่ยนสีกลับเป็นสีขาว (หรือสีตั้งต้นของคุณ) เมื่อยังไม่สำเร็จ
+            // เปลี่ยนสีกลับเป็นสีขาว (หรือสีตั้งต้น) เมื่อยังไม่สำเร็จ
             descUI.color = Color.black; 
             progressUI.color = Color.black; 
         }
