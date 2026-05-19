@@ -47,7 +47,7 @@ public class Level1Manager : MonoBehaviour
 
     void Start()
     {
-        tutorialText.text = "เข้าบ้านมาใหม่ คุณจะต้องจัดการสัมภาระให้เรียบร้อย";
+        tutorialText.text = "เข้าบ้านมาใหม่ คุณจะต้องจัดการสัมภาระให้เรียบร้อย จำเอาไว้ให้ดี ของทั้งหมดคือของของคุณ";
         ShowTutorial1();
     }
 

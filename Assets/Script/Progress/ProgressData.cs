@@ -135,11 +135,11 @@ public class ProgressData : MonoBehaviour
     {
         float progress = 0f;
 
-        // ===== ความสม่ำเสมอ 40% =====
+        // ===== ความสม่ำเสมอ 20% =====
         int playCount =
             PlayerPrefs.GetInt(gameName + "_PlayCount", 0);
 
-        progress += Mathf.Clamp01(playCount / 5f) * 0.4f;
+        progress += Mathf.Clamp01(playCount / 5f) * 0.2f;
 
         // ===== คะแนนพัฒนาการ 40% =====
         int bestScore =
@@ -156,7 +156,7 @@ public class ProgressData : MonoBehaviour
                 completedQuest++;
         }
 
-        progress += (completedQuest / 3f) * 0.2f;
+        progress += (completedQuest / 3f) * 0.4f;
 
         return Mathf.Clamp01(progress);
     }
