@@ -135,9 +135,9 @@ public class PasscodeGame : MonoBehaviour
             ProgressData.instance.CompleteQuest("HouseGame", 0);
         }
 
-        if (StreakController.instance != null)
-            StreakController.instance.AddStreak();
-
+        /*if (StreakController.instance != null)
+            StreakController.instance.AddStreak();*/
+            
         storyController.StartNextStory();
         gameObject.SetActive(false);
     }

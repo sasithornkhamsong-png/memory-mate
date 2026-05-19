@@ -37,11 +37,11 @@ public class ReminderManager : MonoBehaviour
         var notification = new AndroidNotification()
         {
             Title = "อย่าลืมทบทวนนะ!",
-            Text = "ถึงเวลาฝึกความจำแล้วค่า กลับมาเล่นได้เลย!",
+            Text = "ถึงเวลาฝึกความจำแล้ว กลับมาเล่นได้เลย!",
             FireTime = DateTime.Now.AddMinutes(1),
             //FireTime = DateTime.Now.AddDays(2),
         };
 
         AndroidNotificationCenter.SendNotification(notification, "reminder_channel");
     }
-}
+}  
