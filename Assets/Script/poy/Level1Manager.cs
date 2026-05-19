@@ -276,10 +276,12 @@ public class Level1Manager : MonoBehaviour
             panelCompliment.SetActive(false);
         }
         
-        if (panelNextGame != null)
+        /*if (panelNextGame != null)
         {
             panelNextGame.SetActive(true); 
-        }
+        }*/
+
+        SceneManager.LoadScene("Scene_Level2"); 
     }
 
     // ปุ่ม Button_NextGame เรียก scene ใหม่
