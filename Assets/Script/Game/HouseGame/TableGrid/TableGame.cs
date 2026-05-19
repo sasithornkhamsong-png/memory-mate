@@ -144,10 +144,10 @@ public class TableGame : MonoBehaviour
 
     void GoNext()
     {
-        if (StreakController.instance != null)
+        /*if (StreakController.instance != null)
         {
             StreakController.instance.AddStreak();
-        }
+        }*/
         SceneManager.LoadScene("FortuneSticks");
     }
 

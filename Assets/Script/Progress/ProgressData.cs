@@ -55,9 +55,26 @@ public class ProgressData : MonoBehaviour
         else
             PlayerPrefs.SetInt(gameName + "_Recent_0", 1);
 
-        // ---------- Save Last Played Day ----------
-        string today = System.DateTime.Now.ToString("yyyyMMdd");
-        PlayerPrefs.SetString(gameName + "_LastPlayedDate", today);
+        // ---------- STREAK ----------
+        string today =
+            System.DateTime.Now.ToString("yyyyMMdd");
+
+        string lastPlayedDate =
+            PlayerPrefs.GetString(
+                "Global_LastPlayedDate",
+                ""
+            );
+
+        // เล่นครั้งแรกของวันเท่านั้น
+        if (lastPlayedDate != today)
+        {
+            StreakController.instance.AddStreak();
+
+            PlayerPrefs.SetString(
+                "Global_LastPlayedDate",
+                today
+            );
+        }
 
         // ---------- Progress ----------
         UpdateProgress(gameName, score, isPersonalBest);
@@ -145,9 +162,9 @@ public class ProgressData : MonoBehaviour
         int bestScore =
             GetBestScore(gameName);
 
-        progress += Mathf.Clamp01(bestScore / 300f) * 0.4f;
+        progress += Mathf.Clamp01(bestScore / 500f) * 0.4f;
 
-        // ===== ความครบถ้วน 20% =====
+        // ===== ความครบถ้วน 40% =====
         int completedQuest = 0;
 
         for (int i = 0; i < 3; i++)

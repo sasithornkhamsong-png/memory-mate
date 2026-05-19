@@ -129,7 +129,7 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.Save();
 
         ProgressData.instance.UpdateBestScore("HouseGame", score);
-        StreakController.instance.AddStreak();
+        //StreakController.instance.AddStreak();
     }
 
     // ========== ฟังก์ชันของเพื่อน ==========
