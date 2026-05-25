@@ -92,4 +92,5 @@ public class ShowStat_Game1 : MonoBehaviour
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("stat_game3");
     }
+
 }
