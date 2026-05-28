@@ -155,8 +155,8 @@ public class HappyMarketGame : MonoBehaviour
                 if (ProgressData.instance != null)
                     ProgressData.instance.CompleteQuest("HappyMarket", 0);
                 
-                if (StreakController.instance != null)
-                    StreakController.instance.AddStreak();
+                /*if (StreakController.instance != null)
+                    StreakController.instance.AddStreak();*/
                 
                 Invoke(nameof(GoToStory2), 3f);
             }

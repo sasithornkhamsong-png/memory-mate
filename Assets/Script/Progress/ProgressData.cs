@@ -48,16 +48,59 @@ public class ProgressData : MonoBehaviour
         }
 
         // ---------- Recent 5 Days ----------
+        string today =
+            System.DateTime.Now.ToString("yyyyMMdd");
+
+        string lastRecentDate =
+            PlayerPrefs.GetString(
+                gameName + "_LastRecentDate",
+                ""
+            );
+
+        // เพิ่ม recent แค่ครั้งแรกของวัน
+        if (lastRecentDate != today)
+        {
+            ShiftRecent(gameName);
+
+            if (isPersonalBest)
+                PlayerPrefs.SetInt(gameName + "_Recent_0", 2);
+            else
+                PlayerPrefs.SetInt(gameName + "_Recent_0", 1);
+
+            PlayerPrefs.SetString(
+                gameName + "_LastRecentDate",
+                today
+            );
+        }
+
+        /*// ---------- Recent 5 Days ----------
         ShiftRecent(gameName);
 
         if (isPersonalBest)
             PlayerPrefs.SetInt(gameName + "_Recent_0", 2);
         else
-            PlayerPrefs.SetInt(gameName + "_Recent_0", 1);
+            PlayerPrefs.SetInt(gameName + "_Recent_0", 1);*/
 
-        // ---------- Save Last Played Day ----------
-        string today = System.DateTime.Now.ToString("yyyyMMdd");
-        PlayerPrefs.SetString(gameName + "_LastPlayedDate", today);
+        // ---------- STREAK ----------
+        string today =
+            System.DateTime.Now.ToString("yyyyMMdd");
+
+        string lastPlayedDate =
+            PlayerPrefs.GetString(
+                "Global_LastPlayedDate",
+                ""
+            );
+
+        // เล่นครั้งแรกของวันเท่านั้น
+        if (lastPlayedDate != today)
+        {
+            StreakController.instance.AddStreak();
+
+            PlayerPrefs.SetString(
+                "Global_LastPlayedDate",
+                today
+            );
+        }
 
         // ---------- Progress ----------
         UpdateProgress(gameName, score, isPersonalBest);
@@ -131,23 +174,24 @@ public class ProgressData : MonoBehaviour
 
     // ======= คำนวณ % ของแต่ละเกม =======
     // maxScore และ totalQuests ต้องกำหนดตามแต่ละเกม
-    public float GetProgress(string gameName)
+    /*public float GetProgress(string gameName)
     {
         float progress = 0f;
 
-        // ===== ความสม่ำเสมอ 40% =====
+        // ===== ความสม่ำเสมอ 20% ===== ต้องแก้เพิ่ม ===== 
         int playCount =
             PlayerPrefs.GetInt(gameName + "_PlayCount", 0);
 
-        progress += Mathf.Clamp01(playCount / 5f) * 0.4f;
+        progress += Mathf.Clamp01(playCount / 5f) * 0.2f; // ==== เล่นมากกว่า 5 ครั้งได้ =====
+        // ==== เพิ่มจังหวะก่อน reset =====  เผื่อผู้เล่นไม่เห็น success ของตัวเอง
 
         // ===== คะแนนพัฒนาการ 40% =====
         int bestScore =
             GetBestScore(gameName);
 
-        progress += Mathf.Clamp01(bestScore / 300f) * 0.4f;
+        progress += Mathf.Clamp01(bestScore / 500f) * 0.4f;
 
-        // ===== ความครบถ้วน 20% =====
+        // ===== ความครบถ้วน 40% =====
         int completedQuest = 0;
 
         for (int i = 0; i < 3; i++)
@@ -156,7 +200,37 @@ public class ProgressData : MonoBehaviour
                 completedQuest++;
         }
 
-        progress += (completedQuest / 3f) * 0.2f;
+        progress += (completedQuest / 3f) * 0.4f;
+
+        return Mathf.Clamp01(progress);
+    }*/
+
+    public float GetProgress(string gameName)
+    {
+        float progress = 0f;
+
+        // ===== ความสม่ำเสมอ 20% =====
+        int playDays =
+            PlayerPrefs.GetInt(gameName + "_PlayDays", 0);
+
+        progress += Mathf.Clamp01((playDays - 1) / 5f) * 0.2f;
+
+        // ===== คะแนนพัฒนาการ 40% =====
+        int bestScore =
+            GetBestScore(gameName);
+
+        progress += Mathf.Clamp01(bestScore / 500f) * 0.4f;
+
+        // ===== ความครบถ้วน 40% =====
+        int completedQuest = 0;
+
+        for (int i = 0; i < 3; i++)
+        {
+            if (IsQuestComplete(gameName, i))
+                completedQuest++;
+        }
+
+        progress += (completedQuest / 3f) * 0.4f;
 
         return Mathf.Clamp01(progress);
     }

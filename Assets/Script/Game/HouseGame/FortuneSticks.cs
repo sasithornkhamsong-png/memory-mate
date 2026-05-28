@@ -249,12 +249,12 @@ public class FortuneSticksGame : MonoBehaviour
             PlayerPrefs.SetInt("score_Game1Level3", playerScore);
             PlayerPrefs.Save();
 
-            resultText.text = "<color=green>RIGHT</color>";
+            resultText.text = "<color=green>สำเร็จ</color>";
             StartCoroutine(ShowCongratsAfterDelay());
         }
         else
         {
-            resultText.text = "<color=red>try again</color>";
+            resultText.text = "<color=red>ลองอีกครั้ง</color>";
             playerScore--;
             if (playerScore < 0) playerScore = 0;
             PressClear();

@@ -1,44 +1,47 @@
-using UnityEngine;
 using System;
-
-#if UNITY_ANDROID
+using UnityEngine;
 using Unity.Notifications.Android;
-#endif
 
-public class NotificationManager : MonoBehaviour
+public class ReminderManager : MonoBehaviour
 {
     void Start()
     {
-        ScheduleNotification();
+        CreateChannel();
+        AndroidNotificationCenter.CancelAllNotifications(); // เปิดแอป → ล้างของเก่า
     }
 
-    void ScheduleNotification()
+    void OnApplicationPause(bool paused)
     {
-#if UNITY_ANDROID
+        if (paused)
+        {
+            AndroidNotificationCenter.CancelAllNotifications();
+            ScheduleReminder();
+        }
+    }
 
-        // สร้าง Channel
+    void CreateChannel()
+    {
         var channel = new AndroidNotificationChannel()
         {
             Id = "reminder_channel",
-            Name = "Reminder Notification",
+            Name = "Reminder",
             Importance = Importance.Default,
-            Description = "Game Reminder"
+            Description = "แจ้งเตือนให้กลับมาทบทวน",
         };
 
         AndroidNotificationCenter.RegisterNotificationChannel(channel);
-
-        // ตั้งแจ้งเตือน
-        var notification = new AndroidNotification();
-
-        notification.Title = "คิดถึงกันบ้างมั้ย 👀";
-        notification.Text = "กลับมาฝึกสมองกันต่อได้น้า";
-        notification.FireTime = DateTime.Now.AddDays(2);
-
-        AndroidNotificationCenter.SendNotification(
-            notification,
-            "reminder_channel"
-        );
-
-#endif
     }
-}
+
+    void ScheduleReminder()
+    {
+        var notification = new AndroidNotification()
+        {
+            Title = "อย่าลืมทบทวนนะ!",
+            Text = "ถึงเวลาฝึกความจำแล้ว กลับมาเล่นได้เลย!",
+            FireTime = DateTime.Now.AddMinutes(1),
+            //FireTime = DateTime.Now.AddDays(2),
+        };
+
+        AndroidNotificationCenter.SendNotification(notification, "reminder_channel");
+    }
+}  
