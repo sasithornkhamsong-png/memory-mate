@@ -82,8 +82,8 @@ public class ProgressData : MonoBehaviour
             PlayerPrefs.SetInt(gameName + "_Recent_0", 1);*/
 
         // ---------- STREAK ----------
-        string today =
-            System.DateTime.Now.ToString("yyyyMMdd");
+        /*string today =
+            System.DateTime.Now.ToString("yyyyMMdd");*/
 
         string lastPlayedDate =
             PlayerPrefs.GetString(

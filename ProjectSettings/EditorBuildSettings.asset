@@ -32,7 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Scene_Level2.unity
     guid: 1df855b545ddf504783551c8f895141a
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Scene_Mission.unity
     guid: fd87fe282726c514eba1e1d219424406
   - enabled: 1
